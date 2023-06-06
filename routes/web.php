@@ -14,5 +14,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::get('/login', function () {
+    return view('auth/login');
+});
+
+Route::get('/dashboard', function () {
+    return view('database/dashboard');
+});
+
+Route::get('/profile', function () {
+    return view('database/profile');
+});
+
+Route::get('/request', function () {
+    return view('database/request');
+});
+
+
+// modal content
+Route::get('/inbox', function () {
+    return view('components/contents/inbox');
+});
+
+Route::get('/input', function () {
+    return view('components/contents/input');
 });
