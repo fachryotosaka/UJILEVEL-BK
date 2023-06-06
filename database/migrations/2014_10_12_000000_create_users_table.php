@@ -18,7 +18,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('profile_photo_path', 2048)->nullable();
+            $table->enum('role', ['admin', 'teacher', 'student']);
+            $table->unsignedBigInteger('classroom_id')->nullable();
             $table->timestamps();
+            $table->foreign('classroom_id')->references('id')->on('classrooms');
         });
     }
 
@@ -27,6 +31,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
+        Schema::enableForeignKeyConstraints();
     }
 };
