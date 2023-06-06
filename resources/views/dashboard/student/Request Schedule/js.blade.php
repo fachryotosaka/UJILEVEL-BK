@@ -36,6 +36,9 @@
         //define variable
         let title   = $('#title').val();
         let description = $('#description').val();
+        let time = $('#time').val();
+        let date = $('#date').val();
+        let place = $('#place').val();
 
         let token   = $("meta[name='csrf-token']").attr("content");
             //ajax
@@ -45,6 +48,9 @@
             data: {
                 "title": title,
                 "description": description,
+                "time": time,
+                "date": date,
+                "place": place,
                 "teacher_id": teacherId,
                 "_token": token,
             },

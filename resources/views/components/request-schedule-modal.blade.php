@@ -28,6 +28,24 @@
                     <textarea id="description" class="form-control" rows="5"></textarea>
                     <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-description"></div>
                 </div>
+
+                <div class="form-group" >
+                    <label for="time" class="control-label">Time</label>
+                    <input type="time" class="form-control" id="time">
+                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-time"></div>
+                </div>
+
+                <div class="form-group" >
+                    <label for="date" class="control-label">Date</label>
+                    <input type="date" class="form-control" id="date">
+                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-date"></div>
+                </div>
+                
+                <div class="form-group" >
+                    <label for="place" class="control-label">Place</label>
+                    <input type="place" class="form-control" id="place">
+                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-place"></div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>

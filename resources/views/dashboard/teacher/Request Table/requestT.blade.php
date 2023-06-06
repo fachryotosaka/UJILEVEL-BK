@@ -30,8 +30,7 @@
                             </td>
                           @else
                             <td class="text-center">
-                                <a href="{{ Route('request-form', ['id' => $consultation->id, 'action' => 'accept']) }}" id="btn-accept-request" class="btn btn-primary btn-sm">Accept</a>
-                                <a href="{{ Route('request-form', ['id' => $consultation->id, 'action' => 'decline']) }}" id="btn-decline-request" class="btn btn-danger btn-sm">Decline</a>
+                                <a href="{{ Route('request-form', $consultation->id) }}" id="btn-accept-request" class="btn btn-primary btn-sm">View</a>
                             </td>
                           @endif
                       </tr>

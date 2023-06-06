@@ -16,6 +16,9 @@ class ConsultationController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
+            'time' => 'required',
+            'date' => 'required',
+            'place' => 'required',
         ]);
 
         //check if validation fails
@@ -41,6 +44,9 @@ class ConsultationController extends Controller
         $consultation = new Consultation();
         $consultation->title = $request->input('title');
         $consultation->description = $request->input('description');
+        $consultation->time = $request->input('time');
+        $consultation->date = $request->input('date');
+        $consultation->place = $request->input('place');
         $consultation->status = 'waiting';
         $consultation->save();
 
@@ -102,7 +108,7 @@ class ConsultationController extends Controller
             foreach ($students as $student) {
                 $consultationsForStudent = $student->consultations()
                 ->where('teacher_id', $user->id)
-                ->whereIn('status', ['decline', 'finished'])
+                ->whereIn('status', ['revised', 'finished'])
                 ->withPivot('student_id')
                 ->get();
 
@@ -118,7 +124,7 @@ class ConsultationController extends Controller
         return view('dashboard.shared.Archive Table.archiveT', compact('consultations'));
     }
 
-    public function requestForm(Request $request, $id, $action = null)
+    public function requestForm(Request $request, $id)
     {
         $consultation = Consultation::findOrFail($id);
 
@@ -127,29 +133,13 @@ class ConsultationController extends Controller
             $student = User::find($studentId);
         }
 
-        return view('dashboard.teacher.Request Table.requestForm', compact('consultation', 'student', 'action'));
+        return view('dashboard.teacher.Request Table.requestForm', compact('consultation', 'student'));
     }
 
-    public function acceptRequest(Request $request, $id)
+    public function acceptRequest($id)
     {
         $consultation = Consultation::findOrFail($id);
-        // Validate the request data
-        $validator = Validator::make($request->all(), [
-            'time' => 'required',
-            'date' => 'required',
-            'place' => 'required',
-        ]);
 
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        // Create the user
-        $consultation->time = $request->input('time');
-        $consultation->date = $request->input('date');
-        $consultation->place = $request->input('place');
-        $consultation->status = 'approve';
         $consultation->save();
 
         return response()->json([
@@ -163,6 +153,9 @@ class ConsultationController extends Controller
         $consultation = Consultation::findOrFail($id);
         // Validate the request data
         $validator = Validator::make($request->all(), [
+            'time' => 'required',
+            'date' => 'required',
+            'place' => 'required',
             'reason' => 'required',
         ]);
 
@@ -172,8 +165,11 @@ class ConsultationController extends Controller
         }
 
         // Create the user
+        $consultation->time = $request->input('time');
+        $consultation->date = $request->input('date');
+        $consultation->place = $request->input('place');
         $consultation->reason = $request->input('reason');
-        $consultation->status = 'decline';
+        $consultation->status = 'revised';
         $consultation->save();
 
         return response()->json([

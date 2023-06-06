@@ -18,7 +18,7 @@ return new class extends Migration
             $table->time('time')->nullable();
             $table->date('date')->nullable();
             $table->longText('place')->nullable();
-            $table->enum('status', ['waiting', 'approve', 'decline', 'finished'])->nullable();
+            $table->enum('status', ['waiting', 'approve', 'revised', 'finished'])->nullable();
             $table->longText('result')->nullable();
             $table->longText('reason')->nullable();
             $table->timestamps();

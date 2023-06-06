@@ -55,7 +55,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('students', [StudentTController::class, 'index'])->name('students');
     Route::get('request-schedule', [ConsultationController::class, 'getRequest'])->name('get-request-schedule');
-    Route::get('/request-form/{id}/{action?}', [ConsultationController::class, 'requestForm'])->name('request-form');
+    Route::get('/request-form/{id}', [ConsultationController::class, 'requestForm'])->name('request-form');
     Route::post('/accept-request/{id}', [ConsultationController::class, 'acceptRequest']);
     Route::post('/decline-request/{id}', [ConsultationController::class, 'declineRequest']);
 
