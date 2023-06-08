@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Consultation;
+use App\Models\ConsultationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,7 @@ class ConsultationController extends Controller
     {
         // Validate the request data
         $validator = Validator::make($request->all(), [
+            'service_id' => 'required',
             'title' => 'required',
             'description' => 'required',
             'time' => 'required',
@@ -42,6 +44,7 @@ class ConsultationController extends Controller
 
         // Create the request schedule
         $consultation = new Consultation();
+        $consultation->service_id = $request->input('service_id');
         $consultation->title = $request->input('title');
         $consultation->description = $request->input('description');
         $consultation->time = $request->input('time');
@@ -50,7 +53,14 @@ class ConsultationController extends Controller
         $consultation->status = 'waiting';
         $consultation->save();
 
-        $consultation->users()->attach($consultation, ['student_id' => $student->id, 'teacher_id' => $teacher->id]);
+        if($request->student_id != null){
+            foreach ($request->student_id as $studentId) {
+                $consultation->users()->attach($consultation, ['student_id' => $studentId, 'teacher_id' => $teacher->id]);
+            }
+        } else {
+            $consultation->users()->attach($consultation, ['student_id' => $student->id, 'teacher_id' => $teacher->id]);
+        }
+
 
         return response()->json([
             'success' => true,
@@ -69,20 +79,36 @@ class ConsultationController extends Controller
         
         foreach ($students as $student) {
             $consultationsForStudent = $student->consultations()
-            ->where('teacher_id', $user->id)
-            ->whereIn('status', ['waiting', 'approve'])
-            ->withPivot('student_id')
-            ->get();
-
+                ->where('teacher_id', $user->id)
+                ->whereIn('status', ['waiting', 'approve'])
+                ->withPivot('student_id')
+                ->get();
+        
             $consultationsForStudent = $consultationsForStudent->map(function ($consultation) use ($student) {
-                $consultation->student_name = $student->name;
+                $consultationService = $consultation->service_id;
+                $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
                 return $consultation;
             });
-    
-            $consultations = $consultations->merge($consultationsForStudent);
+        
+            $consultations = $consultations->concat($consultationsForStudent);
         }
+        
+        $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {
+            $students = [];
+        
+            foreach ($group as $student) {
+                $student_id = $student->pivot->student_id; // Access the pivot data
+                $studentData = User::where('id', $student_id)->pluck('name')->first();
+        
+                $students[] = $studentData;
+            }
+        
+            return $students;
+        });
 
-        return view('dashboard.teacher.Request Table.requestT', compact('consultations'));
+        $consultations = $consultations->unique('id');
+        
+        return view('dashboard.teacher.Request Table.requestT', compact('consultations', 'groupedConsultations'));
     }
 
     public function archiveSchedule()
@@ -97,9 +123,12 @@ class ConsultationController extends Controller
             // Get the teacher name for each consultation
             foreach ($consultations as $consultation) {
                 $teacherId = $consultation->pivot->teacher_id;
+                $consultationService = $consultation->service_id;
                 $teacher = User::find($teacherId);
                 $consultation->teacher_name = $teacher->name;
+                $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
             }
+
         } elseif ($user->role === 'teacher') {
             // Retrieve the consultations associated with the teacher
             $students = User::where('role', 'student')->get();
@@ -107,21 +136,37 @@ class ConsultationController extends Controller
             
             foreach ($students as $student) {
                 $consultationsForStudent = $student->consultations()
-                ->where('teacher_id', $user->id)
-                ->whereIn('status', ['revised', 'finished'])
-                ->withPivot('student_id')
-                ->get();
-
+                    ->where('teacher_id', $user->id)
+                    ->whereIn('status', ['revised', 'finished'])
+                    ->withPivot('student_id')
+                    ->get();
+            
                 $consultationsForStudent = $consultationsForStudent->map(function ($consultation) use ($student) {
-                    $consultation->student_name = $student->name;
+                    $consultationService = $consultation->service_id;
+                    $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
                     return $consultation;
                 });
-        
-                $consultations = $consultations->merge($consultationsForStudent);
+            
+                $consultations = $consultations->concat($consultationsForStudent);
             }
         }
+        
+        $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {
+            $students = [];
+        
+            foreach ($group as $student) {
+                $student_id = $student->pivot->student_id; // Access the pivot data
+                $studentData = User::where('id', $student_id)->pluck('name')->first();
+        
+                $students[] = $studentData;
+            }
+        
+            return $students;
+        });
 
-        return view('dashboard.shared.Archive Table.archiveT', compact('consultations'));
+        $consultations = $consultations->unique('id');
+
+        return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations'));
     }
 
     public function requestForm(Request $request, $id)
@@ -140,6 +185,7 @@ class ConsultationController extends Controller
     {
         $consultation = Consultation::findOrFail($id);
 
+        $consultation->status = 'approve';
         $consultation->save();
 
         return response()->json([

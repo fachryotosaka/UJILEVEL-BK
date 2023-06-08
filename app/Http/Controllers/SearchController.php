@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Classroom;
+use App\Models\ConsultationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,22 @@ class SearchController extends Controller
   
         if($request->filled('q')){
             $data = User::select("name", "id")
+                        ->where('name', 'LIKE', '%'. $request->get('q'). '%')
+                        ->get();
+        }
+    
+        return response()->json($data);
+    }
+
+    public function findStudent(Request $request)
+    {
+        $data = [];
+
+        // $data = User::select("name", "id")->get()->take(2);
+  
+        if($request->filled('q')){
+            $data = User::select("name", "id")
+                        ->where('role', 'student')
                         ->where('name', 'LIKE', '%'. $request->get('q'). '%')
                         ->get();
         }
@@ -63,5 +80,13 @@ class SearchController extends Controller
                     ->get();
 
         return response()->json($teacher);
+    }
+
+    public function getCounselingService()
+    {
+        $service = ConsultationService::select('id', 'name')
+                            ->get();
+
+        return response()->json($service);
     }
 }

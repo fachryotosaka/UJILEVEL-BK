@@ -44,7 +44,10 @@
                 <a class="nav-link" href="{{ route('admin.index') }}">Admin Table</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('teacher.index') }}">Teacher Table</a>
+                <a class="nav-link" href="{{ route('counseling-teacher.index') }}">Counseling Teacher Table</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('classroom-teacher.index') }}">Classroom Teacher Table</a>
               </li>
             @endif
 

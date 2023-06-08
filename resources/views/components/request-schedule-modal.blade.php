@@ -18,34 +18,54 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="title" class="control-label">Title</label>
-                    <input type="text" class="form-control" id="title">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-title"></div>
+                    <label for="type" class="control-label">Counseling Type</label>
+                    <select class="custom-select" id="type">
+                    </select>
+                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-type"></div>
                 </div>
 
-                <div class="form-group">
-                    <label for="description" class="control-label">Description</label>
-                    <textarea id="description" class="form-control" rows="5"></textarea>
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-description"></div>
+                <div id="social-request-form" class="counselingForm" style="display: none">
+                    <div class="form-group">
+                        <label for="student" class="control-label">Student</label>
+                        <select class="custom-select" id="student">
+                        </select>
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-type"></div>
+                    </div>
                 </div>
 
-                <div class="form-group" >
-                    <label for="time" class="control-label">Time</label>
-                    <input type="time" class="form-control" id="time">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-time"></div>
+                <div id="base-request-form" class="counselingForm" style="display: none">
+                    <div class="form-group">
+                        <label for="title" class="control-label">Title</label>
+                        <input type="text" class="form-control" id="title">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-title"></div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="description" class="control-label">Description</label>
+                        <textarea id="description" class="form-control" rows="5"></textarea>
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-description"></div>
+                    </div>
+    
+                    <div class="form-group" >
+                        <label for="time" class="control-label">Time</label>
+                        <input type="time" class="form-control" id="time">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-time"></div>
+                    </div>
+    
+                    <div class="form-group" >
+                        <label for="date" class="control-label">Date</label>
+                        <input type="date" class="form-control" id="date">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-date"></div>
+                    </div>
+                    
+                    <div class="form-group" >
+                        <label for="place" class="control-label">Place</label>
+                        <input type="place" class="form-control" id="place">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-place"></div>
+                    </div>
                 </div>
 
-                <div class="form-group" >
-                    <label for="date" class="control-label">Date</label>
-                    <input type="date" class="form-control" id="date">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-date"></div>
-                </div>
-                
-                <div class="form-group" >
-                    <label for="place" class="control-label">Place</label>
-                    <input type="place" class="form-control" id="place">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-place"></div>
-                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>

@@ -11,6 +11,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Description</th>
+                        <th scope="col">consultation Type</th>
                         <th scope="col">Status</th>
                         @if (Auth::user()->role === 'teacher')
                           <th scope="col">Student</th>
@@ -26,9 +27,14 @@
                           <th scope="row">{{ $loop->iteration }}</th>
                           <td>{{ $consultation->title }}</td>
                           <td>{{ $consultation->description }}</td>
+                          <td>{{ $consultation->service_name }}</td>
                           <td>{{ $consultation->status }}</td>
                           @if (Auth::user()->role === 'teacher')
-                            <td>{{ $consultation->student_name}}</td>
+                          <td>
+                            @foreach ($groupedConsultations[$consultation->id] as $item)
+                                {{ $item }} <br>
+                            @endforeach
+                          </td>
                           @elseif(Auth::user()->role === 'student')
                             <td>{{ $consultation->teacher_name}}</td>
                           @endif

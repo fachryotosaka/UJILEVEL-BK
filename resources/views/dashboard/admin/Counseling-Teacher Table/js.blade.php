@@ -81,7 +81,7 @@
 
         //fetch detail post with ajax
         $.ajax({
-            url: `/teacher/${teacher_id}`,
+            url: `/counseling-teacher/${teacher_id}`,
             type: "GET",
             cache: false,
             success:function(response){
@@ -116,7 +116,7 @@
             if (isCreateAction) {
                 //ajax
                 $.ajax({
-                url: "/teacher",
+                url: "/counseling-teacher",
                 type: "POST",
                 data: {
                     "name": name,
@@ -233,7 +233,7 @@
             });
             } else {
                 $.ajax({
-                    url: `/teacher/${teacher_id}`,
+                    url: `/counseling-teacher/${teacher_id}`,
                     type: "PUT",
                     cache: false,
                     data: {
@@ -360,7 +360,7 @@
                 //fetch to delete data
                 $.ajax({
 
-                    url: `/teacher/${teacher_id}`,
+                    url: `/counseling-teacher/${teacher_id}`,
                     type: "DELETE",
                     cache: false,
                     data: {

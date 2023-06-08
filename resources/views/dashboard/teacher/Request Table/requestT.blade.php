@@ -12,6 +12,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Description</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Counseling Type</th>
                         <th scope="col">Student</th>
                         <th scope="col" class="text-center">Action</th>
                       </tr>
@@ -23,7 +24,12 @@
                           <td>{{ $consultation->title }}</td>
                           <td>{{ $consultation->description }}</td>
                           <td>{{ $consultation->status }}</td>
-                          <td>{{ $consultation->student_name}}</td>
+                          <td>{{ $consultation->service_name}}</td>
+                          <td>
+                            @foreach ($groupedConsultations[$consultation->id] as $item)
+                                {{ $item }}
+                            @endforeach
+                          </td>
                           @if ($consultation->status === 'approve')
                             <td class="text-center">
                               <a href="#" id="btn-view-request" class="btn btn-primary btn-sm">View</a>

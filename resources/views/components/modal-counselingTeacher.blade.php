@@ -42,4 +42,4 @@
     </div>
 </div>
 
-@include('dashboard.admin.Teacher Table.js')
+@include('dashboard.admin.Counseling-Teacher Table.js')

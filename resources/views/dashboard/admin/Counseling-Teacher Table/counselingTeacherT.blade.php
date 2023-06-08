@@ -41,6 +41,6 @@
         </div>
     </div>
 
-    @include('components.modal-teacher')
+    @include('components.modal-counselingTeacher')
 
 @endsection
