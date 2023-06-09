@@ -65,6 +65,9 @@
                 <a class="nav-link" href="{{ route('get-request-schedule') }}">Request</a>
               </li>
               <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" id="btn-create-schedule">Send Schedule</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="{{ route('archive-schedule') }}">History</a>
               </li>
             @elseif(Auth::user()->role === 'student')
@@ -91,7 +94,7 @@
             @yield('content')
         </div>
     </div>
-    @if(Auth::user() != null && Auth::user()->role === 'student')
+    @if(Auth::user() != null && Auth::user()->role === 'student' || Auth::user() != null && Auth::user()->role === 'teacher')
       @include('components.request-schedule-modal')
     @endif
     @stack('script')

@@ -3,10 +3,14 @@
 @section('content')
     <div>
         <div class="d-flex">
-            <img style="height: 100px" src="{{ $student->profile_photo_url }}">
+            <img style="height: 100px" src="{{ $students[0]->profile_photo_url }}">
             <div id="detail-student">
-                <p>Name : {{ $student->name }}</p>
-                <p>Class : {{ $student->classroom->name }}</p>
+                <p>
+                    Name : @foreach ($students as $student)
+                    - {{ $student->name }} <br>
+                    @endforeach
+                </p>
+                <p>Class : {{ $students[0]->classroom->name }}</p>
             </div>
         </div>
         <div>

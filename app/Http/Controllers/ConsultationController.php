@@ -28,18 +28,42 @@ class ConsultationController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $student = User::findOrFail(Auth::user()->id);
-        $teacher = User::findOrFail($request->input('teacher_id'));
+        if(Auth::user()->role === 'student'){
+            $student = User::findOrFail(Auth::user()->id);
+            $teacher = User::findOrFail($request->input('teacher_id'));
+        } elseif(Auth::user()->role === 'teacher' && $request->input('student_id') != null) {
+            $student = User::findOrFail($request->input('student_id'));
+            $teacher = User::findOrFail(Auth::user()->id);
+        } elseif(Auth::user()->role === 'teacher' && $request->input('students_id') != null) {
+            $students = User::findOrFail($request->input('students_id'));
+            $teacher = User::findOrFail(Auth::user()->id);
+        }
 
-        // Check if the student already has a consultation
-        if ($student->consultations()
-                    ->where('student_id', $student->id)
-                    ->whereIn('status',  ['waiting', 'approve'])
-                    ->exists()) {
-            return response()->json([
-                'status' => 'Already make request',
-                'message' => 'Lu jangan spam ye',
-            ]);
+
+        if ($request->input('students_id') != null) {
+            // Check if the student already has a consultation
+            foreach ($students as $student) {
+                if ($student->consultations()
+                            ->where('student_id', $student->id)
+                            ->whereIn('status',  ['waiting', 'approve'])
+                            ->exists()) {
+                    return response()->json([
+                        'status' => 'Already make request',
+                        'message' => 'Lu jangan spam ye',
+                    ]);
+                }
+            }
+        } else {
+            // Check if the student already has a consultation
+            if ($student->consultations()
+                        ->where('student_id', $student->id)
+                        ->whereIn('status',  ['waiting', 'approve'])
+                        ->exists()) {
+                return response()->json([
+                    'status' => 'Already make request',
+                    'message' => 'Lu jangan spam ye',
+                ]);
+            }
         }
 
         // Create the request schedule
@@ -53,8 +77,8 @@ class ConsultationController extends Controller
         $consultation->status = 'waiting';
         $consultation->save();
 
-        if($request->student_id != null){
-            foreach ($request->student_id as $studentId) {
+        if($request->students_id != null){
+            foreach ($request->students_id as $studentId) {
                 $consultation->users()->attach($consultation, ['student_id' => $studentId, 'teacher_id' => $teacher->id]);
             }
         } else {
@@ -90,7 +114,7 @@ class ConsultationController extends Controller
                 return $consultation;
             });
         
-            $consultations = $consultations->concat($consultationsForStudent);
+            $consultations = $consultations->merge($consultationsForStudent);
         }
         
         $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {
@@ -107,7 +131,7 @@ class ConsultationController extends Controller
         });
 
         $consultations = $consultations->unique('id');
-        
+                
         return view('dashboard.teacher.Request Table.requestT', compact('consultations', 'groupedConsultations'));
     }
 
@@ -165,6 +189,7 @@ class ConsultationController extends Controller
         });
 
         $consultations = $consultations->unique('id');
+        
 
         return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations'));
     }
@@ -173,12 +198,15 @@ class ConsultationController extends Controller
     {
         $consultation = Consultation::findOrFail($id);
 
+        $students = [];
+
         foreach ($consultation->users as $item) {
             $studentId = $item->pivot->student_id;
             $student = User::find($studentId);
+            $students[] = $student;
         }
 
-        return view('dashboard.teacher.Request Table.requestForm', compact('consultation', 'student'));
+        return view('dashboard.teacher.Request Table.requestForm', compact('consultation', 'students'));
     }
 
     public function acceptRequest($id)

@@ -3,23 +3,27 @@
     // Listen for the modal hidden event
     $('#modal-request-schedule').on('hidden.bs.modal', function() {
         // Clear the values in the modal-body
-        let type =$('#type').empty();
-        let title = $('#title').val('');
-        let description = $('#description').val('');
-        let time = $('#time').val('');
-        let date = $('#date').val('');
-        let place = $('#place').val('');
+        $('#type').empty();
+        $('#title').val('');
+        $('#description').val('');
+        $('#time').val('');
+        $('#date').val('');
+        $('#place').val('');
+        $('#student').val('').trigger('change'); 
+        $('#students').val('').trigger('change'); 
         $('#teacher-name').remove();
 
         // Set the action flag to create
         isCreateAction = true;
     });
 
-    let teacherId = null
-    let student_id = [];
+    let role = '{{ Auth::user()->role }}';
 
-    $('#student').on('change', function() {
-            student_id = $(this).val();
+    let teacherId = null
+    let students_id = [];
+
+    $('#students').on('change', function() {
+            students_id = $(this).val();
     });
     //button create post event
     $('body').on('click', '#btn-create-schedule', function () {
@@ -31,40 +35,88 @@
             $('.counselingForm').hide();
             
             // Show the relevant form based on the selected value
-            switch (selectedValue) {
-            case '1':
-                $('#base-request-form').show();
-                break;
-            case '2':
-                $('#social-request-form').show();
-                $('#base-request-form').show();
-                break;
-            case '3':
-                $('#base-request-form').show();
-                break;
-            case '4':
-                $('#base-request-form').show();
-            break;
-            default:
-                // Handle case when no option is selected or invalid value
-                break;
+            if(role === 'student') {
+                switch (selectedValue) {
+                    case '1':
+                        $('#base-request-form').show();
+                        break;
+                    case '2':
+                        $('#social-request-form').show();
+                        $('#base-request-form').show();
+                        break;
+                    case '3':
+                        $('#base-request-form').show();
+                        break;
+                    case '4':
+                        $('#base-request-form').show();
+                        break;
+                    default:
+                        // Handle case when no option is selected or invalid value
+                        break;
+                }
+            } else if(role === 'teacher') {
+                switch (selectedValue) {
+                    case '1':
+                        $('#base-request-form').show();
+                        $('#teacher-send-form').show();
+                        break;
+                    case '2':
+                        $('#social-request-form').show();
+                        $('#base-request-form').show();
+                        break;
+                    case '3':
+                        $('#base-request-form').show();
+                        $('#teacher-send-form').show();
+                        break;
+                    case '4':
+                        $('#base-request-form').show();
+                        $('#teacher-send-form').show();
+                        break;
+                    default:
+                        // Handle case when no option is selected or invalid value
+                        break;
+                }
             }
         });
 
-        var path = "{{ route('getTeacher') }}";
         var servicePath = "{{ route('getCounselingService') }}";
         var findStudent = "{{ route('findStudent') }}";
-        $.ajax({
-            url: path,
-            type: "GET",
-            cache: false,
-            success: function(response){
-                $('#detail-student').append(
-                    `<p id="teacher-name">Teacher : ${response[0].name}</p>`
-                );
-                teacherId = response[0].id
-            },
+
+        if(role === 'student') {
+            var path = "{{ route('getTeacher') }}";
+            $.ajax({
+                url: path,
+                type: "GET",
+                cache: false,
+                success: function(response){
+                    $('#detail-student').append(
+                        `<p id="teacher-name">Teacher : ${response[0].name}</p>`
+                    );
+                    teacherId = response[0].id
+                },
+            });
+        } else {
+            $('#student').select2({
+                dropdownParent: $('#modal-request-schedule'),
+                placeholder: 'Select an student',
+                ajax: {
+                    url: findStudent,
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
         });
+        }
         $.ajax({
             url: servicePath,
             type: "GET",
@@ -82,7 +134,7 @@
             },
         });
 
-            $('#student').select2({
+            $('#students').select2({
                 multiple: true,
                 dropdownParent: $('#modal-request-schedule'),
                 placeholder: 'Select an student',
@@ -118,6 +170,7 @@
         let time = $('#time').val();
         let date = $('#date').val();
         let place = $('#place').val();
+        let student_id = $('#student').val();
 
         let token = $("meta[name='csrf-token']").attr("content");
             //ajax
@@ -132,6 +185,7 @@
                 "date": date,
                 "place": place,
                 "teacher_id": teacherId,
+                "students_id": students_id,
                 "student_id": student_id,
                 "_token": token,
             },
@@ -146,12 +200,14 @@
                     });
 
                     //clear form
-                    let type =$('#type').empty();
-                    let title = $('#title').val('');
-                    let description = $('#description').val('');
-                    let time = $('#time').val('');
-                    let date = $('#date').val('');
-                    let place = $('#place').val('');
+                    $('#type').empty();
+                    $('#title').val('');
+                    $('#description').val('');
+                    $('#time').val('');
+                    $('#date').val('');
+                    $('#place').val('');
+                    $('#student').val('').trigger('change'); 
+                    $('#students').val('').trigger('change'); 
                     $('#teacher-name').remove();
 
                     //close modal
@@ -166,8 +222,14 @@
                     });
                     
                     //clear form
+                    $('#type').empty();
                     $('#title').val('');
                     $('#description').val('');
+                    $('#time').val('');
+                    $('#date').val('');
+                    $('#place').val('');
+                    $('#student').val('').trigger('change'); 
+                    $('#students').val('').trigger('change'); 
                     $('#teacher-name').remove();
 
                     //close modal

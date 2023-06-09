@@ -24,12 +24,23 @@
                     <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-type"></div>
                 </div>
 
+                @if (Auth::user()->role === 'teacher')
+                    <div id="teacher-send-form" class="counselingForm" style="display: none">
+                        <div class="form-group">
+                            <label for="student" class="control-label">Student</label>
+                            <select class="custom-select" id="student">
+                            </select>
+                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-student"></div>
+                        </div>
+                    </div>
+                @endif
+
                 <div id="social-request-form" class="counselingForm" style="display: none">
                     <div class="form-group">
-                        <label for="student" class="control-label">Student</label>
-                        <select class="custom-select" id="student">
+                        <label for="students" class="control-label">Student</label>
+                        <select class="custom-select" id="students">
                         </select>
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-type"></div>
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-students"></div>
                     </div>
                 </div>
 
