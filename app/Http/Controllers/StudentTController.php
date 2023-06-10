@@ -16,7 +16,7 @@ class StudentTController extends Controller
     public function index()
     {
         $users = null;
-        if(Auth::user()->role === 'teacher'){
+        if(Auth::user()->role === 'teacher' || Auth::user()->role === 'classroom_teacher'){
             $users = User::where('role', 'student')
                 ->where('classroom_id', Auth::user()->classroom_id)
                 ->paginate(10);

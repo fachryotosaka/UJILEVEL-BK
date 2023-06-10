@@ -24,6 +24,7 @@ class ServiceSeeder extends Seeder
             ['name' => 'Social Counseling'],
             ['name' => 'Career Counseling'],
             ['name' => 'Study Counseling'],
+            ['name' => 'Socialization career counseling'],
         ];
 
         foreach ($data as $item) {

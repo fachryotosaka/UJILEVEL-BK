@@ -2,17 +2,21 @@
 
 @section('content')
     <div>
-        <div class="d-flex">
-            <img style="height: 100px" src="{{ $students[0]->profile_photo_url }}">
-            <div id="detail-student">
-                <p>
-                    Name : @foreach ($students as $student)
-                    - {{ $student->name }} <br>
-                    @endforeach
-                </p>
-                <p>Class : {{ $students[0]->classroom->name }}</p>
+        @if ($students[0] != null)
+            <div class="d-flex">
+                <img style="height: 100px" src="{{ $students[0]->profile_photo_url }}">
+                <div id="detail-student">
+                    <p>
+                        Name : @foreach ($students as $student)
+                        - {{ $student->name }} <br>
+                        @endforeach
+                    </p>
+                    <p>Class : {{ $students[0]->classroom->name }}</p>
+                </div>
             </div>
-        </div>
+        @else
+            <p>All classes</p>
+        @endif
         <div>
             <p>{{ $consultation->title }}</p>
             <p>{{ $consultation->description }}</p>

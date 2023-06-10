@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TeacherMiddleware
+class CounselingTeacherMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class TeacherMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'teacher' || auth()->check() && auth()->user()->role === 'classroom_teacher') {
+        if (auth()->check() && auth()->user()->role === 'teacher') {
             return $next($request);
         }
 

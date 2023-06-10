@@ -70,6 +70,13 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('archive-schedule') }}">History</a>
               </li>
+            @elseif(Auth::user()->role === 'classroom_teacher')
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('students') }}">Student Table</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('archive-schedule') }}">History</a>
+              </li>
             @elseif(Auth::user()->role === 'student')
               <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" id="btn-create-schedule">Request Schedule</a>

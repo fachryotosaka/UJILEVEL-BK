@@ -64,13 +64,12 @@
                         $('#social-request-form').show();
                         $('#base-request-form').show();
                         break;
-                    case '3':
-                        $('#base-request-form').show();
-                        $('#teacher-send-form').show();
-                        break;
                     case '4':
                         $('#base-request-form').show();
                         $('#teacher-send-form').show();
+                        break;
+                    case '5':
+                        $('#base-request-form').show();
                         break;
                     default:
                         // Handle case when no option is selected or invalid value
@@ -128,6 +127,15 @@
 
                 // Iterate over the data and create option elements
                 $.each(response, function(index, item) {
+                    if (role === 'student' && item.id === 5) {
+                        // Exclude option value 2 for students
+                        return;
+                    }
+                    if (role === 'teacher' && item.id === 3) {
+                        // Exclude option value 5 for teachers
+                        return;
+                    }
+
                     var newOption = $('<option>').val(item.id).text(item.name);
                     select.append(newOption);
                 });

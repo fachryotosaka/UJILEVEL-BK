@@ -13,7 +13,7 @@
                         <th scope="col">Description</th>
                         <th scope="col">consultation Type</th>
                         <th scope="col">Status</th>
-                        @if (Auth::user()->role === 'teacher')
+                        @if (Auth::user()->role === 'teacher' || Auth::user()->role === 'classroom_teacher')
                           <th scope="col">Student</th>
                         @elseif(Auth::user()->role === 'student')
                           <th scope="col">Teacher</th>
@@ -29,7 +29,7 @@
                           <td>{{ $consultation->description }}</td>
                           <td>{{ $consultation->service_name }}</td>
                           <td>{{ $consultation->status }}</td>
-                          @if (Auth::user()->role === 'teacher')
+                          @if (Auth::user()->role === 'teacher' || Auth::user()->role === 'classroom_teacher')
                           <td>
                             @foreach ($groupedConsultations[$consultation->id] as $item)
                                 {{ $item }} <br>
