@@ -29,8 +29,16 @@ Route::get('/profile', function () {
     return view('database/profile');
 });
 
+Route::get('/crequest', function () {
+    return view('database/client-request');
+});
+
 Route::get('/request', function () {
     return view('database/request');
+});
+
+Route::get('/vulnerability', function () {
+    return view('database/vulnerability');
 });
 
 
@@ -41,4 +49,16 @@ Route::get('/inbox', function () {
 
 Route::get('/input', function () {
     return view('components/contents/input');
+});
+
+Route::get('/detailrequest', function () {
+    return view('components/contents/detailrequest');
+});
+
+Route::get('/add', function () {
+    return view('components/contents/add');
+});
+
+Route::get('/vulinsert', function () {
+    return view('components/contents/vulinsert');
 });

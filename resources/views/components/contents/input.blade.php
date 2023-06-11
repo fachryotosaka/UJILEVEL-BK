@@ -10,34 +10,34 @@
         <form class="mt-10 w-full flex flex-col gap-8 overflow-y-auto hide-scroll">        
         
             <div class="flex items-center justify-between">
-                <label class="font-semibold text-footer opacity-50 text-[13px] mr-16" for="name">Name</label>
-                <input id="name" type="text" placeholder="Lexa Otosaka" value="Lexa Otosaka" class="w-[480px] py-3 focus:outline-none focus:border-opacity-90 hover:border-opacity-90 transition duration-200 px-4 border border-footer border-opacity-25 rounded-md font-medium text-xs text-footer">
+                <label class="font-semibold text-subheader opacity-50 text-[13px] mr-16" for="name">Name</label>
+                <input id="name" type="text" placeholder="Lexa Otosaka" value="Lexa Otosaka" class="w-[480px] py-3 focus:outline-none focus:border-opacity-80 hover:border-opacity-80 transition duration-200 px-4 border border-subheader border-opacity-25 rounded-md font-medium text-xs text-subheader">
             </div>
 
             <div class="flex items-center justify-between gap-10">
-                <label class="font-semibold text-footer opacity-50 text-[13px] mr-16" for="class">Class</label>
-                <input id="class" type="text" placeholder="XI PPLG 2" value="XI PPLG 2" class="w-[480px] py-3 focus:outline-none focus:border-opacity-90 hover:border-opacity-90 transition duration-200 px-4 border border-footer border-opacity-25 rounded-md font-medium text-xs text-footer">
+                <label class="font-semibold text-subheader opacity-50 text-[13px] mr-16" for="class">Class</label>
+                <input id="class" type="text" placeholder="XI PPLG 2" value="XI PPLG 2" class="w-[480px] py-3 focus:outline-none focus:border-opacity-80 hover:border-opacity-80 transition duration-200 px-4 border border-subheader border-opacity-25 rounded-md font-medium text-xs text-subheader">
             </div>
 
             <div class="flex items-center justify-between gap-10">
-                <label class="font-semibold text-footer opacity-50 text-[13px] mr-16" for="problem">Problem</label>
-                <input id="problem" type="text" placeholder="beaten by sadness" value="beaten by sadness" class="w-[480px] py-3 focus:outline-none focus:border-opacity-90 hover:border-opacity-90 transition duration-200 px-4 border border-footer border-opacity-25 rounded-md font-medium text-xs text-footer">
+                <label class="font-semibold text-subheader opacity-50 text-[13px] mr-16" for="problem">Problem</label>
+                <input id="problem" type="text" placeholder="beaten by sadness" value="beaten by sadness" class="w-[480px] py-3 focus:outline-none focus:border-opacity-80 hover:border-opacity-80 transition duration-200 px-4 border border-subheader border-opacity-25 rounded-md font-medium text-xs text-subheader">
             </div>
 
             <div class="flex items-center justify-between gap-10">
-                <label class="font-semibold text-footer opacity-50 text-[13px] mr-16" for="place">Place</label>
-                <input id="place" type="text" placeholder="Tanggerang" value="Tanggerang" class="w-[480px] py-3 focus:outline-none focus:border-opacity-90 hover:border-opacity-90 transition duration-200 px-4 border border-footer border-opacity-25 rounded-md font-medium text-xs text-footer">
+                <label class="font-semibold text-subheader opacity-50 text-[13px] mr-16" for="place">Place</label>
+                <input id="place" type="text" placeholder="Tanggerang" value="Tanggerang" class="w-[480px] py-3 focus:outline-none focus:border-opacity-80 hover:border-opacity-80 transition duration-200 px-4 border border-subheader border-opacity-25 rounded-md font-medium text-xs text-subheader">
             </div>
 
             <div class="flex items-center justify-between gap-10">
-                <label class="font-semibold text-footer opacity-50 text-[13px] mr-16" for="datepicker">Date</label>
-                <input id="datepicker" type="text" placeholder="October 27th, 2027" value="October 27th, 2027" class="w-[480px] py-3 focus:outline-none focus:border-opacity-90 hover:border-opacity-90 transition duration-200 px-4 border border-footer border-opacity-25 rounded-md font-medium text-xs text-footer">
+                <label class="font-semibold text-subheader opacity-50 text-[13px] mr-16" for="datepicker">Date</label>
+                <input id="datepicker" type="text" placeholder="October 27th, 2027" value="October 27th, 2027" class="w-[480px] py-3 focus:outline-none focus:border-opacity-80 hover:border-opacity-80 transition duration-200 px-4 border border-subheader border-opacity-25 rounded-md font-medium text-xs text-subheader">
             </div>
 
 
             <div class="flex items-center justify-end gap-2 mt-8">
 
-                <button class="rounded-lg mr-auto bg-[#eaeaea] flex items-center gap-1 font-semibold text-footer/80 text-[11px] px-4 py-3 hover:scale-95 transition duration-200">
+                <button class="rounded-lg mr-auto bg-[#eaeaea] flex items-center gap-1 font-semibold text-subheader/80 text-[11px] px-4 py-3 hover:scale-95 transition duration-200">
                     <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5042 3.65376C12.4909 3.65376 12.4709 3.65376 12.4509 3.65376C8.92369 3.30037 5.40319 3.16702 1.916 3.5204L0.555799 3.65376C0.275758 3.68043 0.029056 3.4804 0.00238546 3.20036C-0.0242851 2.92032 0.175744 2.68028 0.449117 2.65361L1.80931 2.52026C5.35651 2.16021 8.95037 2.30023 12.5509 2.65361C12.8243 2.68028 13.0243 2.92698 12.9976 3.20036C12.9776 3.46039 12.7576 3.65376 12.5042 3.65376Z" fill="#676767"/>
                         <path d="M4.17049 2.98043C4.14382 2.98043 4.11715 2.98043 4.08381 2.97376C3.8171 2.92709 3.63041 2.66705 3.67708 2.40035L3.82377 1.52689C3.93045 0.886795 4.07714 0 5.63067 0H7.37759C8.93782 0 9.08451 0.920133 9.18452 1.53355L9.33121 2.40035C9.37788 2.67372 9.19119 2.93376 8.92448 2.97376C8.65111 3.02044 8.39107 2.83374 8.35107 2.56704L8.20438 1.70025C8.11103 1.12016 8.09103 1.00681 7.38426 1.00681H5.63734C4.9306 1.00681 4.91726 1.10016 4.81725 1.69358L4.66389 2.56037C4.62389 2.80707 4.41052 2.98043 4.17049 2.98043Z" fill="#676767"/>
@@ -48,11 +48,11 @@
                     Remove
                 </button>
 
-                <button class="rounded-lg px-2 py-3 font-semibold text-footer text-[11px] hover:scale-95 transition duration-200">
+                <button class="rounded-lg px-2 py-3 font-semibold text-subheader text-[11px] hover:scale-95 transition duration-200">
                     Cancel
                 </button>
 
-                <button class="rounded-lg bg-gradient-to-br deep-shadow from-blue-main-100 to-blue-main-200 to-[150%] hover:scale-95 transition duration-200 tracking-wide font-semibold text-[11px] text-white px-6 py-3">
+                <button class="rounded-lg bg-blue-main shadow-xl hover:scale-95 transition duration-200 tracking-wide font-semibold text-[11px] text-white px-6 py-3">
                     Save Changes
                 </button>
 

@@ -30,15 +30,15 @@
     
     <div class="w-full h-screen flex">
 
-        <aside class="w-[20%] flex flex-col py-10 px-10 font-Mplus1 bg-[#f9f9f9]">
+        <aside class="w-[17%] flex flex-col pb-10 pl-8 font-Mplus1 mt-3 bg-white border-r border-[#EEF2F6]">
             
             @include('database/layouts/sidebar')
 
         </aside>
 
-        <div class="w-[80%] h-screen flex flex-col box-content">
+        <div class="w-[83%] h-screen flex flex-col box-content">
 
-            <header class="h-[14%] w-full px-12 py-9 font-Mplus1cus flex">
+            <header class="h-[12%] w-full px-12 py-10 font-Mplus1cus flex">
 
                 @include('database/layouts/header')
 

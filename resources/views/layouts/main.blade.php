@@ -20,26 +20,37 @@
 
     @include('components.fonts.fonts')
 
+    <!-- Jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    
+    <!-- Js link -->
+    <script src="{{asset('js/script.js')}}"></script>
+
 </head>
 <body>
     
+    <!-- Container start -->
     <div class="w-full h-screen">
 
-        <nav class="font-Mplus1 w-full fixed top-0 justify-between items-center text-nav-items flex h-24 px-20 bg-white z-10">
+        <!-- Navbar -->
+        <nav class="navbar font-Mplus1cus w-full fixed top-0 justify-start gap-24 items-center text-nav-items flex h-24 px-20 bg-white z-10">
 
             @include('layouts.navbar')
 
         </nav>
 
+        <!-- Main content -->
         @yield('content')
 
-        <footer class="font-Mplus1 px-20 text-footer py-12">
+        <!-- Footer -->
+        <footer class="font-Poppins px-20 text-footer py-16">
 
             @include('layouts.footer')
 
         </footer>
 
     </div>
+    <!-- Container end -->
 
 </body>
 </html>
