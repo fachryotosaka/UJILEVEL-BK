@@ -31,16 +31,20 @@ class ConsultationController extends Controller
         if(Auth::user()->role === 'student' && $request->input('students_id') == null){
             $student = User::findOrFail(Auth::user()->id);
             $teacher = User::findOrFail($request->input('teacher_id'));
-        } elseif(Auth::user()->role === 'student' && $request->input('students_id') != null) {
+        } 
+        elseif(Auth::user()->role === 'student' && $request->input('students_id') != null) {
             $students = User::findOrFail($request->input('students_id'));
-            $teacher = User::findOrFail(Auth::user()->id);
-        } elseif(Auth::user()->role === 'teacher' && $request->input('student_id') != null) {
+            $teacher = User::findOrFail($request->input('teacher_id'));
+        } 
+        elseif(Auth::user()->role === 'teacher' && $request->input('student_id') != null) {
             $student = User::findOrFail($request->input('student_id'));
             $teacher = User::findOrFail(Auth::user()->id);
-        } elseif(Auth::user()->role === 'teacher' && $request->input('students_id') != null) {
+        } 
+        elseif(Auth::user()->role === 'teacher' && $request->input('students_id') != null) {
             $students = User::findOrFail($request->input('students_id'));
             $teacher = User::findOrFail(Auth::user()->id);
-        } else {
+        } 
+        else {
             $teacher = User::findOrFail(Auth::user()->id);
         }
 
@@ -86,13 +90,8 @@ class ConsultationController extends Controller
             // Set student_id as null for service_id 5
             $consultation->users()->attach($consultation, ['student_id' => null, 'teacher_id' => $teacher->id]);
         } else {
-            if ($request->students_id != null) {
-                foreach ($request->students_id as $studentId) {
-                    $consultation->users()->attach($consultation, ['student_id' => $studentId, 'teacher_id' => $teacher->id]);
-                }
-            } else {
-                $consultation->users()->attach($consultation, ['student_id' => $student->id, 'teacher_id' => $teacher->id]);
-            }
+            $studentIds = $request->students_id != null ? implode(',', $request->students_id) : $student->id;
+            $consultation->users()->attach($consultation, ['student_id' => $studentIds, 'teacher_id' => $teacher->id]);
         }
 
         return response()->json([
@@ -100,68 +99,6 @@ class ConsultationController extends Controller
             'message' => 'Data Berhasil Disimpan!',
             'data'    => $consultation
         ]);
-    }
-
-    public function getRequest()
-    {
-        $user = Auth::user();
-
-        // Retrieve the consultations associated with the teacher
-        $students = User::where('role', 'student')->get();
-        $consultations = collect();
-
-        $teacherCounseling = $user->teacherConsultations;
-
-        foreach ($students as $student) {
-            $consultationsForStudent = $student->consultations()
-                ->where('teacher_id', $user->id)
-                ->whereIn('status', ['waiting', 'approve'])
-                ->withPivot('student_id')
-                ->get();
-        
-            $consultationsForStudent = $consultationsForStudent->map(function ($consultation) {
-                $consultationService = $consultation->service_id;
-                $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
-                return $consultation;
-            });
-        
-            $consultations = $consultations->merge($consultationsForStudent);
-        }
-
-
-            foreach ($teacherCounseling as $consultation) {
-                $consultationService = $consultation->service_id;
-
-                // Get the teacher and service information
-                $service = ConsultationService::find($consultationService);
-
-                $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
-                    return $consultation->pivot->student_id === null;
-                });
-
-                $consultation->service_name = $service->name;
-
-                $consultations = $consultations->concat($consultationsWithNullStudent);
-    
-            }
-
-        
-        $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {
-            $students = [];
-        
-            foreach ($group as $student) {
-                $student_id = $student->pivot->student_id; // Access the pivot data
-                $studentData = User::where('id', $student_id)->pluck('name')->first();
-        
-                $students[] = $studentData;
-            }
-        
-            return $students;
-        });
-
-        $consultations = $consultations->unique('id');
-                
-        return view('dashboard.teacher.Request Table.requestT', compact('consultations', 'groupedConsultations'));
     }
 
     public function archiveSchedule()
@@ -172,59 +109,34 @@ class ConsultationController extends Controller
         // Check if the user is a student or a teacher
         if ($user->role === 'student') {
             // Retrieve the consultations associated with the student
-
-            $consultations = $user->consultations;
             $classroomId = $user->classroom_id;
-
+        
             // Get the teacher
             $teacher = User::where('role', 'teacher')
                             ->where('classroom_id', $classroomId)
                             ->first();
-
+        
             $teacherCounseling = $teacher->teacherConsultations;
-
-            foreach ($consultations as $consultation) {
+        
+            $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
+                return $consultation->pivot->student_id === null;
+            });
+        
+            $studentId = $user->id;
+            $studentConsultations = Consultation::whereHas('users', function ($query) use ($studentId) {
+                $query->whereRaw("FIND_IN_SET($studentId, student_id)");
+            })->get();
+        
+            $consultations = $consultationsWithNullStudent->concat($studentConsultations);
+        
+            // Assign the teacher and service names to the consultations
+            $consultations = $consultations->map(function ($consultation) use ($teacher) {
                 $consultationService = $consultation->service_id;
-
-                // Get service information
                 $service = ConsultationService::find($consultationService);
-
-                // Check if the teacher's classroom_id is the same as the student's classroom_id
-                if ($teacher->classroom_id === $user->classroom_id) {
-                    // Assign the teacher and service names to the consultation
-                    $consultation->teacher_name = $teacher->name;
-                    $consultation->service_name = $service->name;
-                } else {
-                    // If the classroom_id does not match, remove the consultation
-                    $consultations->forget($consultation);
-                }
-    
-            }
-
-            foreach ($teacherCounseling as $consultation) {
-                $consultationService = $consultation->service_id;
-
-                // Get the teacher and service information
-                $service = ConsultationService::find($consultationService);
-
-                $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
-                    return $consultation->pivot->student_id === null;
-                });
-
-                // Check if the teacher's classroom_id is the same as the student's classroom_id
-                if ($teacher->classroom_id === $user->classroom_id) {
-                    // Assign the teacher and service names to the consultation
-                    $consultation->teacher_name = $teacher->name;
-                    $consultation->service_name = $service->name;
-                } else {
-                    // If the classroom_id does not match, remove the consultation
-                    $consultations->forget($consultation);
-                }
-
-                $consultations = $consultations->concat($consultationsWithNullStudent);
-    
-            }
-
+                $consultation->teacher_name = $teacher->name;
+                $consultation->service_name = $service->name;
+                return $consultation;
+            });
 
         } elseif ($user->role === 'teacher') {
             // Retrieve the consultations associated with the teacher
@@ -235,11 +147,10 @@ class ConsultationController extends Controller
             foreach ($students as $student) {
                 $consultationsForStudent = $student->consultations()
                     ->where('teacher_id', $user->id)
-                    ->whereIn('status', ['revised', 'finished'])
                     ->withPivot('student_id')
                     ->get();
             
-                $consultationsForStudent = $consultationsForStudent->map(function ($consultation) use ($student) {
+                $consultationsForStudent = $consultationsForStudent->map(function ($consultation) {
                     $consultationService = $consultation->service_id;
                     $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
                     return $consultation;
@@ -260,9 +171,8 @@ class ConsultationController extends Controller
 
                 $consultation->service_name = $service->name;
 
-                $consultations = $consultations->concat($consultationsWithNullStudent);
-    
             }
+            $consultations = $consultations->concat($consultationsWithNullStudent);
 
         } elseif($user->role === 'classroom_teacher') {
             // Retrieve the consultations associated with the teacher
@@ -271,8 +181,8 @@ class ConsultationController extends Controller
             $consultations = collect();
             // Get the teacher and service information
             $teacher = User::where('role', 'teacher')
-            ->where('classroom_id', $classroomId)
-            ->first();
+                            ->where('classroom_id', $classroomId)
+                            ->first();
 
             $teacherCounseling = $teacher->teacherConsultations;
             
@@ -282,7 +192,7 @@ class ConsultationController extends Controller
                     ->withPivot('student_id')
                     ->get();
             
-                $consultationsForStudent = $consultationsForStudent->map(function ($consultation) use ($student) {
+                $consultationsForStudent = $consultationsForStudent->map(function ($consultation) {
                     $consultationService = $consultation->service_id;
                     $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
                     return $consultation;
@@ -303,43 +213,34 @@ class ConsultationController extends Controller
 
                 $consultation->service_name = $service->name;
 
-                $consultations = $consultations->concat($consultationsWithNullStudent);
-    
             }
+            $consultations = $consultations->concat($consultationsWithNullStudent);
         }
         
         $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {
-            $students = [];
-        
-            foreach ($group as $student) {
-                $student_id = $student->pivot->student_id; // Access the pivot data
-                $studentData = User::where('id', $student_id)->pluck('name')->first();
-        
-                $students[] = $studentData;
-            }
-        
-            return $students;
+            $studentIds = $group->pluck('pivot.student_id')->first();
+            $numbers = explode(",", $studentIds);
+            $numbers = array_map('intval', $numbers);
+            $studentsData = User::whereIn('id', $numbers)->pluck('name')->toArray();
+            
+            return implode(', ', $studentsData);
         });
-
-        $consultations = $consultations->unique('id');
         
+        $consultations = $consultations->unique('id');
 
         return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations'));
     }
 
     public function requestForm(Request $request, $id)
     {
-        $consultation = Consultation::findOrFail($id);
+        $consultation = Consultation::with('users')->findOrFail($id);
 
-        $students = [];
+        $studentIds = $consultation->users[0]->pivot->student_id;
+        $numbers = explode(",", $studentIds);
+        $numbers = array_map('intval', $numbers);
+        $students = User::whereIn('id', $numbers)->get();
 
-        foreach ($consultation->users as $item) {
-            $studentId = $item->pivot->student_id;
-            $student = User::find($studentId);
-            $students[] = $student;
-        }
-
-        return view('dashboard.teacher.Request Table.requestForm', compact('consultation', 'students'));
+        return view('dashboard.teacher.Request Form.requestForm', compact('consultation', 'students'));
     }
 
     public function acceptRequest($id)

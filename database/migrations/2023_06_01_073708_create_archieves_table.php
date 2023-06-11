@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('archives', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->unsignedBigInteger('consultation_id');
-            $table->unsignedBigInteger('student_id')->nullable();
+            $table->string('student_id')->nullable();
             $table->unsignedBigInteger('teacher_id');
             $table->foreign('consultation_id')->references('id')->on('consultations');
-            $table->foreign('student_id')->references('id')->on('users');
             $table->foreign('teacher_id')->references('id')->on('users');
         });
     }

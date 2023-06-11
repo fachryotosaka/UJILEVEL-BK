@@ -57,6 +57,6 @@
         </div>
     </div>
 
-    @include('dashboard.teacher.Request Table.requestFormJS')
+    @include('dashboard.teacher.Request Form.requestFormJS')
 
 @endsection

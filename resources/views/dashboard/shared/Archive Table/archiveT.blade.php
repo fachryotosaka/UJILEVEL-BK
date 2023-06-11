@@ -29,19 +29,32 @@
                           <td>{{ $consultation->description }}</td>
                           <td>{{ $consultation->service_name }}</td>
                           <td>{{ $consultation->status }}</td>
-                          @if (Auth::user()->role === 'teacher' || Auth::user()->role === 'classroom_teacher')
-                          <td>
-                            @foreach ($groupedConsultations[$consultation->id] as $item)
-                                {{ $item }} <br>
-                            @endforeach
-                          </td>
+                          @if (Auth::user()->role === 'teacher')
+                            <td>
+                              {{$groupedConsultations[$consultation->id]}}
+                            </td>
+                            @if ($consultation->status === 'approve' || $consultation->status === 'revised' || $consultation->status === 'finished')
+                              <td class="text-center">
+                                <a href="#" id="btn-view-request" class="btn btn-primary btn-sm">View</a>
+                              </td>
+                            @else
+                              <td class="text-center">
+                                  <a href="{{ Route('request-form', $consultation->id) }}" id="btn-accept-request" class="btn btn-primary btn-sm">View</a>
+                              </td>
+                            @endif
                           @elseif(Auth::user()->role === 'student')
                             <td>{{ $consultation->teacher_name}}</td>
+                            <td class="text-center">
+                              <a href="#" id="btn-view-request" class="btn btn-primary btn-sm">View</a>
+                            </td>
+                          @elseif(Auth::user()->role === 'classroom_teacher')
+                            <td>
+                              {{$groupedConsultations[$consultation->id]}}
+                            </td>
+                            <td class="text-center">
+                              <a href="#" id="btn-view-request" class="btn btn-primary btn-sm">View</a>
+                            </td>
                           @endif
-                          {{-- <td class="text-center">
-                              <a href="javascript:void(0)" id="btn-edit-teacher" data-id="{{ $item->id }}" class="btn btn-primary btn-sm">EDIT</a>
-                              <a href="javascript:void(0)" id="btn-delete-teacher" data-id="{{ $item->id }}" class="btn btn-danger btn-sm">DELETE</a>
-                          </td> --}}
                       </tr>
                       @endforeach
                     </tbody>

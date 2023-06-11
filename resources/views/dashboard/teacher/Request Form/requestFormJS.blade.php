@@ -43,7 +43,7 @@
                   showConfirmButton: false,
                   timer: 3000
               }).then(function() {
-                  window.location.href = "/request-schedule";
+                  window.location.href = "/archive-schedule";
               });
             },
             error:function(error){
@@ -131,7 +131,7 @@
                       showConfirmButton: false,
                       timer: 3000,
                   }).then(function() {
-                      window.location.href = "/request-schedule";
+                      window.location.href = "/archive-schedule";
                   });
                 },
                 error:function(error){
