@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Vulnerability;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminTController;
 use App\Http\Controllers\SearchController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\StudentTController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\VulnerabilityController;
 use App\Http\Controllers\ClassroomTeacherTController;
 use App\Http\Controllers\CounselingTeacherTController;
 
@@ -52,7 +54,16 @@ Route::middleware([
     Route::resource('student', StudentTController::class);
 });
 
-Route::get('students', [StudentTController::class, 'index'])->name('students')->middleware('teacher');
+Route::middleware([
+    'teacher'
+])->group(function () {
+    Route::get('students', [StudentTController::class, 'index'])->name('students');
+    Route::get('vulnerability', [VulnerabilityController::class, 'index'])->name('vulnerability');
+    Route::get('getVulnerabilityNames', [VulnerabilityController::class, 'getVulnerabilityNames'])->name('getVulnerabilityNames');
+    Route::post('addVulnerability/{id}', [VulnerabilityController::class, 'addVulnerability'])->name('addVulnerability');
+    Route::post('editVulnerability/{id}', [VulnerabilityController::class, 'editVulnerability'])->name('editVulnerability');
+    Route::get('fetchStudentVulnerability', [VulnerabilityController::class, 'fetchStudentVulnerability'])->name('fetchStudentVulnerability');
+});
 
 Route::middleware([
     'auth', 'counseling_teacher'
@@ -70,4 +81,5 @@ Route::controller(SearchController::class)->group(function(){
     Route::get('resultUser/{id}', 'resultUser')->name('resultUser');
     Route::get('getTeacher', 'getTeacher')->name('getTeacher');
     Route::get('getCounselingService', 'getCounselingService')->name('getCounselingService');
+    Route::get('getVulnerabilityType', 'getVulnerabilityType')->name('getVulnerabilityType');
 });

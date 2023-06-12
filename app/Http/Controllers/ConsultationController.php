@@ -159,20 +159,23 @@ class ConsultationController extends Controller
                 $consultations = $consultations->concat($consultationsForStudent);
             }
 
-            foreach ($teacherCounseling as $consultation) {
-                $consultationService = $consultation->service_id;
-
-                // Get the teacher and service information
-                $service = ConsultationService::find($consultationService);
-
-                $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
-                    return $consultation->pivot->student_id === null;
-                });
-
-                $consultation->service_name = $service->name;
-
+            if ($teacherCounseling->isNotEmpty()) {
+                foreach ($teacherCounseling as $consultation) {
+                    $consultationService = $consultation->service_id;
+    
+                    // Get the teacher and service information
+                    $service = ConsultationService::find($consultationService);
+    
+                    $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
+                        $filteredConsultation = $consultation->pivot->student_id === null;
+                        return $filteredConsultation ?? null;
+                    });
+    
+                    $consultation->service_name = $service->name;
+                }
+                $consultations = $consultations->concat($consultationsWithNullStudent);
             }
-            $consultations = $consultations->concat($consultationsWithNullStudent);
+
 
         } elseif($user->role === 'classroom_teacher') {
             // Retrieve the consultations associated with the teacher
@@ -201,20 +204,22 @@ class ConsultationController extends Controller
                 $consultations = $consultations->concat($consultationsForStudent);
             }
 
-            foreach ($teacherCounseling as $consultation) {
-                $consultationService = $consultation->service_id;
-
-                // Get the teacher and service information
-                $service = ConsultationService::find($consultationService);
-
-                $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
-                    return $consultation->pivot->student_id === null;
-                });
-
-                $consultation->service_name = $service->name;
-
+            if ($teacherCounseling->isNotEmpty()) {
+                foreach ($teacherCounseling as $consultation) {
+                    $consultationService = $consultation->service_id;
+    
+                    // Get the teacher and service information
+                    $service = ConsultationService::find($consultationService);
+    
+                    $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
+                        $filteredConsultation = $consultation->pivot->student_id === null;
+                        return $filteredConsultation ?? null;
+                    });
+    
+                    $consultation->service_name = $service->name;
+                }
+                $consultations = $consultations->concat($consultationsWithNullStudent);
             }
-            $consultations = $consultations->concat($consultationsWithNullStudent);
         }
         
         $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {

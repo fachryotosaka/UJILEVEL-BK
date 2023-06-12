@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Classroom;
-use App\Models\ConsultationService;
 use Illuminate\Http\Request;
+use App\Models\VulnerabilityType;
+use App\Models\ConsultationService;
 use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
@@ -88,5 +89,11 @@ class SearchController extends Controller
                             ->get();
 
         return response()->json($service);
+    }
+
+    function getVulnerabilityType() {
+        $vulnerabilityTypes = VulnerabilityType::select('id', 'name')->get();
+
+        return response()->json($vulnerabilityTypes);
     }
 }

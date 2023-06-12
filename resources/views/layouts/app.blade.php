@@ -62,6 +62,9 @@
                 <a class="nav-link" href="{{ route('students') }}">Student Table</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="{{ route('vulnerability') }}">Vulnerability Table</a>
+              </li>
+              <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" id="btn-create-schedule">Send Schedule</a>
               </li>
               <li class="nav-item">
