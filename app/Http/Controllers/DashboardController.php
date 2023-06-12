@@ -15,7 +15,11 @@ class DashboardController extends Controller
                 break;
 
             case 'teacher':
-                return View('dashboard.teacher.home');
+                return View('dashboard.teacher.Counseling Teacher.home');
+                break;
+
+            case 'classroom_teacher':
+                return View('dashboard.teacher.Classroom Teacher.home');
                 break;
 
             case 'student':

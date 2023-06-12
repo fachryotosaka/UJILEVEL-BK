@@ -7,7 +7,7 @@ use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class TeacherTController extends Controller
+class CounselingTeacherTController extends Controller
 {
  /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class TeacherTController extends Controller
     public function index()
     {
         $users = User::where('role', 'teacher')->paginate(10);
-        return view('dashboard.admin.Teacher Table.teacherT', compact('users'));
+        return view('dashboard.admin.Counseling-Teacher Table.counselingTeacherT', compact('users'));
     }
 
     /**

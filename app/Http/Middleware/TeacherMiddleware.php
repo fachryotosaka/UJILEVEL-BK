@@ -15,7 +15,7 @@ class TeacherMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'teacher') {
+        if (auth()->check() && auth()->user()->role === 'teacher' || auth()->check() && auth()->user()->role === 'classroom_teacher') {
             return $next($request);
         }
 

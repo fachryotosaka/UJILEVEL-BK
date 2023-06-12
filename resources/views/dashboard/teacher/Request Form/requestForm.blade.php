@@ -2,13 +2,21 @@
 
 @section('content')
     <div>
-        <div class="d-flex">
-            <img style="height: 100px" src="{{ $student->profile_photo_url }}">
-            <div id="detail-student">
-                <p>Name : {{ $student->name }}</p>
-                <p>Class : {{ $student->classroom->name }}</p>
+        @if ($students[0] != null)
+            <div class="d-flex">
+                <img style="height: 100px" src="{{ $students[0]->profile_photo_url }}">
+                <div id="detail-student">
+                    <p>
+                        Name : @foreach ($students as $student)
+                        - {{ $student->name }} <br>
+                        @endforeach
+                    </p>
+                    <p>Class : {{ $students[0]->classroom->name }}</p>
+                </div>
             </div>
-        </div>
+        @else
+            <p>All classes</p>
+        @endif
         <div>
             <p>{{ $consultation->title }}</p>
             <p>{{ $consultation->description }}</p>
@@ -47,8 +55,19 @@
                 <button type="button" class="btn btn-primary" id="confirm-revised">Kirim</button>
             </div>
         </div>
+
+        <div id="finish-form" style="display: none">
+            <div class="form-group">
+                <label for="result" class="control-label">result</label>
+                <textarea id="result" class="form-control" rows="5"></textarea>
+                <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-result"></div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" id="confirm-finish">Kirim</button>
+            </div>
+        </div>
     </div>
 
-    @include('dashboard.teacher.Request Table.requestFormJS')
+    @include('dashboard.teacher.Request Form.requestFormJS')
 
 @endsection

@@ -44,7 +44,10 @@
                 <a class="nav-link" href="{{ route('admin.index') }}">Admin Table</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('teacher.index') }}">Teacher Table</a>
+                <a class="nav-link" href="{{ route('counseling-teacher.index') }}">Counseling Teacher Table</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('classroom-teacher.index') }}">Classroom Teacher Table</a>
               </li>
             @endif
 
@@ -59,7 +62,14 @@
                 <a class="nav-link" href="{{ route('students') }}">Student Table</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('get-request-schedule') }}">Request</a>
+                <a href="javascript:void(0)" class="nav-link" id="btn-create-schedule">Send Schedule</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('archive-schedule') }}">History</a>
+              </li>
+            @elseif(Auth::user()->role === 'classroom_teacher')
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('students') }}">Student Table</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('archive-schedule') }}">History</a>
@@ -88,7 +98,7 @@
             @yield('content')
         </div>
     </div>
-    @if(Auth::user() != null && Auth::user()->role === 'student')
+    @if(Auth::user() != null && Auth::user()->role === 'student' || Auth::user() != null && Auth::user()->role === 'teacher')
       @include('components.request-schedule-modal')
     @endif
     @stack('script')
@@ -97,4 +107,4 @@
     @include('dashboard.shared.searchJS')
 
   </body>
-</html>
+</html> 

@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('archives', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('consultation_id');
-            $table->unsignedBigInteger('student_id');
+            $table->string('student_id')->nullable();
             $table->unsignedBigInteger('teacher_id');
             $table->foreign('consultation_id')->references('id')->on('consultations');
-            $table->foreign('student_id')->references('id')->on('users');
             $table->foreign('teacher_id')->references('id')->on('users');
         });
     }
