@@ -159,7 +159,7 @@ class ConsultationController extends Controller
                 $consultations = $consultations->concat($consultationsForStudent);
             }
 
-            if($teacherCounseling->isNotEmpty()){
+            if ($teacherCounseling->isNotEmpty()) {
                 foreach ($teacherCounseling as $consultation) {
                     $consultationService = $consultation->service_id;
     
@@ -167,15 +167,15 @@ class ConsultationController extends Controller
                     $service = ConsultationService::find($consultationService);
     
                     $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
-                        return $consultation->pivot->student_id === null;
+                        $filteredConsultation = $consultation->pivot->student_id === null;
+                        return $filteredConsultation ?? null;
                     });
     
                     $consultation->service_name = $service->name;
-    
                 }
-    
                 $consultations = $consultations->concat($consultationsWithNullStudent);
             }
+
 
         } elseif($user->role === 'classroom_teacher') {
             // Retrieve the consultations associated with the teacher
@@ -204,7 +204,7 @@ class ConsultationController extends Controller
                 $consultations = $consultations->concat($consultationsForStudent);
             }
 
-            if($teacherCounseling->isNotEmpty()){
+            if ($teacherCounseling->isNotEmpty()) {
                 foreach ($teacherCounseling as $consultation) {
                     $consultationService = $consultation->service_id;
     
@@ -212,32 +212,28 @@ class ConsultationController extends Controller
                     $service = ConsultationService::find($consultationService);
     
                     $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
-                        return $consultation->pivot->student_id === null;
+                        $filteredConsultation = $consultation->pivot->student_id === null;
+                        return $filteredConsultation ?? null;
                     });
     
                     $consultation->service_name = $service->name;
-    
                 }
-    
                 $consultations = $consultations->concat($consultationsWithNullStudent);
             }
-
         }
         
         $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {
             $studentIds = $group->pluck('pivot.student_id')->first();
             $numbers = explode(",", $studentIds);
             $numbers = array_map('intval', $numbers);
-            $studentsData = User::select('name', 'profile_photo_path')->whereIn('id', $numbers)->get();
+            $studentsData = User::whereIn('id', $numbers)->pluck('name')->toArray();
             
-            return $studentsData;
+            return implode(', ', $studentsData);
         });
-
-        $statusConsultations = $consultations->groupBy('status');
         
         $consultations = $consultations->unique('id');
 
-        return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations','statusConsultations'));
+        return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations'));
     }
 
     public function requestForm(Request $request, $id)
@@ -287,42 +283,6 @@ class ConsultationController extends Controller
         $consultation->place = $request->input('place');
         $consultation->reason = $request->input('reason');
         $consultation->status = 'revised';
-        $consultation->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Berhasil Disimpan!',
-        ]);
-    }
-
-    public function finishForm($id)
-    {
-        $consultation = Consultation::with('users')->findOrFail($id);
-
-        $studentIds = $consultation->users[0]->pivot->student_id;
-        $numbers = explode(",", $studentIds);
-        $numbers = array_map('intval', $numbers);
-        $students = User::whereIn('id', $numbers)->get();
-
-        return view('dashboard.teacher.Request Form.requestForm', compact('consultation', 'students'));
-    }
-
-    public function finishRequest(Request $request, $id)
-    {
-        $consultation = Consultation::findOrFail($id);
-        // Validate the request data
-        $validator = Validator::make($request->all(), [
-            'result' => 'required',
-        ]);
-
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        // Create the user
-        $consultation->result = $request->input('result');
-        $consultation->status = 'finished';
         $consultation->save();
 
         return response()->json([

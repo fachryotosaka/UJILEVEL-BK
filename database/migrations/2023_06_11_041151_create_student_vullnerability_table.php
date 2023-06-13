@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('vulnerability_id');
             $table->unsignedBigInteger('student_id');
-            $table->foreign('vulnerability_id')->references('id')->on('vulnerability');
+            $table->foreign('vulnerability_id')->references('id')->on('vulnerabilities');
             $table->foreign('student_id')->references('id')->on('users');
-            $table->timestamps();
         });
     }
 

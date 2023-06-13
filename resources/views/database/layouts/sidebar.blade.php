@@ -116,6 +116,17 @@
                 History
             </li>
         </a>
+
+        <a href="{{ route('vulnerability') }}" class="group/hover">
+            <li class="flex items-center gap-3 text-[13px] tracking-wide transition duration-200 {{Request::path() == 'guru' ? 'text-blue-main font-semibold ' : 'group-hover/hover:text-blue-main text-sidebar-items'}}">
+                <svg class="transition duration-200 {{Request::path() == 'guru' ? 'stroke-blue-main' : 'group-hover/hover:stroke-blue-main stroke-sidebar-items'}}" width="16" height="16" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.25 15.8569H10.75C14.5 15.8569 16 14.3569 16 10.6069V6.10687C16 2.35687 14.5 0.856873 10.75 0.856873H6.25C2.5 0.856873 1 2.35687 1 6.10687V10.6069C1 14.3569 2.5 15.8569 6.25 15.8569Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M11.3125 6.10687H5.6875" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M11.3125 10.6069H5.6875" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>      
+                Vulnerability Table
+            </li>
+        </a>
         @elseif(Auth::user()->role === 'classroom_teacher')
         <a href="{{ route('students') }}" class="group/hover">
             <li class="flex items-center gap-3 text-[13px] tracking-wide transition duration-200 {{Request::path() == 'guru' ? 'text-blue-main font-semibold ' : 'group-hover/hover:text-blue-main text-sidebar-items'}}">

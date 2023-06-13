@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vulnerabilities', function (Blueprint $table) {
+        Schema::create('consultation_service', function (Blueprint $table) {
             $table->id();
-            $table->string('vulnerability_type');
-            $table->longText('conclusion')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vulnerabilities');
+        Schema::dropIfExists('consultation_service');
     }
 };
