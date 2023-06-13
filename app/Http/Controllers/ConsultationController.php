@@ -103,7 +103,6 @@ class ConsultationController extends Controller
 
     public function archiveSchedule()
     {
-
         $user = Auth::user();
 
         // Check if the user is a student or a teacher
@@ -230,10 +229,13 @@ class ConsultationController extends Controller
             
             return implode(', ', $studentsData);
         });
+
+        // Group the consultations by their status
+        $statusConsultations = $consultations->groupBy('status');
         
         $consultations = $consultations->unique('id');
 
-        return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations'));
+        return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations', 'statusConsultations'));
     }
 
     public function requestForm(Request $request, $id)
