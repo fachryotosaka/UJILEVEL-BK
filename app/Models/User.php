@@ -3,17 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use App\Models\Classroom;
-use App\Http\Traits\ProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ProfilePhoto;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +21,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -46,26 +42,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class);
-    }
-
-    public function consultations()
-    {
-        return $this->belongsToMany(Consultation::class, 'archives', 'student_id', 'id')
-            ->withPivot('consultation_id','teacher_id');
-    }
-
-    public function teacherConsultations()
-    {
-        return $this->belongsToMany(Consultation::class, 'archives', 'teacher_id', 'id')
-            ->withPivot('consultation_id','student_id');
-    }
-    public function vulnerabilities()
-    {
-        return $this->belongsToMany(Vulnerability::class, 'student_vulnerability', 'student_id', 'vulnerability_id');
-    }
 }
-
