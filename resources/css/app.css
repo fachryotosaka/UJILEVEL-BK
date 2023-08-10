@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .transition{
+    @apply transition-all ease-in-out;
+  }
+}
+

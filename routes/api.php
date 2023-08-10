@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\editScheduleMobile;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ConsultationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('auth/login', [AuthController::class, 'login']);
+Route::get('auth/user', [AuthController::class, 'index'])->middleware('auth:sanctum');
+Route::post('auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('archive-schedule', [ConsultationController::class, 'archiveSchedule'])->middleware('auth:sanctum');
+Route::put('edit-student/{id}', [editScheduleMobile::class, 'updateprofile'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('add-profile-photo', [UserProfileController::class, 'addProfilePhoto'])->middleware('auth:sanctum');
+Route::delete('delete-profile-photo', [UserProfileController::class, 'deleteProfilePhoto'])->middleware('auth:sanctum');
