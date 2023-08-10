@@ -45,6 +45,7 @@
                         $('#base-request-form').show();
                         break;
                     case '3':
+                        $('#career-request-form').show();
                         $('#base-request-form').show();
                         break;
                     case '4':
@@ -180,6 +181,7 @@
         let date = $('#date').val();
         let place = $('#place').val();
         let student_id = $('#student').val();
+        let career_type = $('#career-type').val();
 
         let token = $("meta[name='csrf-token']").attr("content");
             //ajax
@@ -196,6 +198,7 @@
                 "teacher_id": teacherId,
                 "students_id": students_id,
                 "student_id": student_id,
+                "career_type": career_type,
                 "_token": token,
             },
             success:function(response){
@@ -215,6 +218,7 @@
                     $('#time').val('');
                     $('#date').val('');
                     $('#place').val('');
+                    $('#career-type').val('');
                     $('#student').val('').trigger('change'); 
                     $('#students').val('').trigger('change'); 
                     $('#teacher-name').remove();
@@ -330,6 +334,15 @@
 
                     //add message to alert
                     $('#alert-place').html(error.responseJSON.place[0]);
+                }
+                if(error.responseJSON.career_type && error.responseJSON.career_type[0]) {
+
+                    //show alert
+                    $('#alert-career-type').removeClass('d-none');
+                    $('#alert-career-type').addClass('d-block');
+
+                    //add message to alert
+                    $('#alert-career-type').html(error.responseJSON.career_type[0]);
                 }
 
                 

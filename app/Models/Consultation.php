@@ -18,6 +18,7 @@ class Consultation extends Model
         'date',
         'place',
         'result',
+        'career_type',
     ];
 
     public function users()
