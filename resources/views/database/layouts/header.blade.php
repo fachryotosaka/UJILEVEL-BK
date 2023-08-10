@@ -1,5 +1,5 @@
 @switch(true)
-    @case (Request::path() == 'profile')
+    @case (Request::path() == 'user/profile')
         
         <div class="flex items-center w-full">
         
@@ -10,7 +10,7 @@
         </div>
     @break
 
-    @case (Request::path() == 'crequest')
+    @case (Request::path() == 'finish-request/'.Request::segment(2))
     
         <div class="flex items-center w-full">
             
@@ -22,12 +22,12 @@
 
     @break
 
-    @case (Request::path() == 'request')
+    @case (Request::path() == 'archive-schedule')
     
         <div class="flex items-center w-full">
             
             <div class="flex flex-col mr-3">
-                <p class="font-semibold text-black-main text-xl">Request</p>
+                <p class="font-semibold text-black-main text-xl">Archive Schedule</p>
             </div>
         
         </div>
@@ -77,13 +77,17 @@
 
     <div class="h-8 w-[1px] rounded-xl bg-subheader opacity-40 ml-7 mr-[22px]"></div>
 
-    <div class="w-11 h-11 rounded-full bg-cover" style="background-image: url({{asset('img/chop.png')}})"></div>
+    <div class="w-10 h-10 rounded-full bg-cover" style="background-image: url({{ Auth()->user()->profile_photo_url }})"></div>
 
-    <div class="flex flex-col font-Mplus1cus ml-3 -mt-0.5">
+    <div class="flex flex-col font-Mplus1cus ml-3 -mt-0.5 ">
 
-        <p class="font-semibold text-black-main">Lexa</p>
-        <p class="font-medium text-[11px] text-footer opacity-50">CEO Tesla Technology</p>
+        <p class="font-semibold text-black-main">{{Auth::user()->name}}</p>
+        <p class="font-medium text-[11px] text-footer opacity-50">{{Auth::user()->role}}</p>
 
     </div>
 
 </div>
+
+@if(Auth::user() != null && Auth::user()->role === 'student')
+    @include('components.request-schedule-modal')
+@endif

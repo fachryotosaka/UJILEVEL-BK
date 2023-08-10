@@ -20,17 +20,10 @@
 
     @include('components.fonts.fonts')
 
-    <!-- Jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    
-    <!-- Js link -->
-    <script src="{{asset('js/script.js')}}"></script>
-
 </head>
 <body>
-    
-    <!-- Container start -->
-    <div class="w-full h-screen">
+      <!-- Container start -->
+      <div class="w-full h-screen">
 
         <!-- Navbar -->
         <nav class="navbar font-Mplus1cus w-full fixed top-0 justify-start gap-24 items-center text-nav-items flex h-24 px-20 bg-white z-10">
@@ -43,7 +36,7 @@
         @yield('content')
 
         <!-- Footer -->
-        <footer class="font-Poppins px-20 text-footer py-16">
+        <footer class="font-Poppins px-20 text-footer py-16" id="footer">
 
             @include('layouts.footer')
 

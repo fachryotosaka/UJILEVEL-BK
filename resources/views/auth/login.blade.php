@@ -31,16 +31,16 @@
 
         <div class="flex flex-col justify-between w-[30%]">
 
-            <p class="font-bold text-[1.125rem] flex items-center gap-[0.375rem]"><span class="text-white w-8 h-8 flex items-center justify-center text-start bg-blue-main rounded-md">R</span> odegree</p>
+            <p class="font-bold font-Mplus1cus text-[1.125rem] flex items-center gap-[1px]"><span class="text-blue-main font-extrabold flex items-center justify-center text-start rounded-md">G</span>uidance.</p>
 
             <div class="order-2 font-Mulish">
 
                 <p class="font-Serif font-bold text-2xl text-header mb-1">Welcome Back !</p>
 
-                <p class="opacity-90 text-subheader">start managing your finance faster and better.</p>
+                <p class="opacity-90 text-subheader">start consule your problem easily and better.</p>
 
-                <form action="/dashboard" class="flex flex-col mt-11 gap-2">
-
+                <form action="{{ route('login') }}" method="POST" class="flex flex-col mt-11 gap-2">
+                    @csrf
                     <label for="email" class="flex bg-form-bg w-full py-3 px-3 gap-3 items-center rounded-lg transition-all ease-in-out duration-100 hover:border focus-within:border invalid:border invalid:border-red-600 group/form mb-5">
 
                         <label for="email" class="p-2 bg-white flex items-center rounded-lg">
@@ -50,11 +50,13 @@
                             </svg>                                
                         </label>
 
-                        <input id="email" class="bg-transparent w-full focus:outline-none font-Mulish text-sm placeholder:text-sm text-footer font-medium" type="email" placeholder="you@example.com">
+                        <input id="email" name="email" class="bg-transparent w-full focus:outline-none font-Mulish text-sm placeholder:text-sm text-footer font-medium" type="email" placeholder="you@example.com">
 
                     </label>
+                    @error('email')
+                    <p class="-mt-5 mb-1 text-[10px] text-red-600 ml-1 "><i class="fa-regular fa-circle-xmark mr-1"></i>{{ $message }}l</p>
+                    @enderror
 
-                    <p class="-mt-5 mb-1 text-[10px] text-red-600 ml-1 hidden"><i class="fa-regular fa-circle-xmark mr-1"></i>Please input a valid email</p>
 
                     <label for="pass" class="flex bg-form-bg w-full py-3 px-3 gap-3 items-center rounded-lg transition-all ease-in-out duration-100 hover:border focus-within:border invalid:border invalid:border-red-600 group/form">
 
@@ -73,9 +75,9 @@
                     </label>
 
                     <div class="flex justify-between items-center mb-5">
-
+                    @error('password')
                         <p class="text-[10px] text-red-600 ml-1 hidden"><i class="fa-regular fa-circle-xmark mr-1"></i>Password invalid</p>
-
+                    @enderror
                         <a href="" class="ml-auto">
                             <span class="font-light text-xs text-blue-main">Forgot password ?</span>
                         </a>
@@ -107,7 +109,7 @@
             <p class="order-3 text-center font-Mulish text-subheader opacity-70 text-xs font-medium">©2023 ALL RIGHT RESERVED</p>
         </div>
 
-        <div class="w-[50%] h-full rounded-xl bg-cover bg-center" style="background-image: url({{asset('img/rendang.jpg')}})">
+        <div class="w-[50%] h-full rounded-xl bg-cover bg-center" style="background-image: url({{asset('img/about.jpg')}})">
             <div class="bg-header w-full h-full rounded-xl opacity-25"></div>
         </div>
 

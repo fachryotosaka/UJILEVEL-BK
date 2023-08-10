@@ -1,11 +1,11 @@
 <a href="/">
-    <p class="font-bold text-[1.125rem] flex items-center gap-[0.375rem]"><span class="text-white w-8 h-8 flex items-center justify-center text-start bg-blue-main rounded-md">R</span> odegree</p>
+    <p class="font-bold text-[1.125rem] flex items-center gap-[1px]"><span class="text-blue-main font-extrabold flex items-center justify-center text-start rounded-md">G</span>uidance.</p>
 </a>
 
 <ul class="flex items-center gap-8 font-medium text-[0.813rem] uppercase mt-1">
-    <li>Home</li>
-    <li>About us</li>
-    <li>Contact</li>
+    <a href="#home"><li>Home</li></a>
+    <a href="#about"><li>About us</li></a>
+    <a href="#footer"><li>Contact</li></a>
 </ul>
 
 <a href="/login" class="ml-auto hover:scale-95 duration-200">

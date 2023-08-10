@@ -5,21 +5,21 @@
 @section('content')
 
     <!-- Hero Start -->
-    <section class="font-Mplus1cus px-20 pt-[7.5rem] pb-20">
+    <section class="font-Mplus1cus px-20 pt-[7.5rem] pb-20" id="home">
 
         <div class="w-full justify-between flex relative">
 
             <!-- Hero text -->
-            <p class="font-Mukta font-extrabold sm:text-[50px] md:text-[60px] lg:text-[70px] xl:text-[82px] 2xl:text-[90px] tracking-normal text-header w-2/3 2xl:w-1/2 leading-none">Explore and <span class="text-blue-main">Learn</span> enjoyable.</p>
+            <p class="font-Mukta font-extrabold sm:text-[50px] md:text-[60px] lg:text-[70px] xl:text-[82px] 2xl:text-[85px] tracking-normal text-header w-2/3 2xl:w-2/3 leading-none">Guidance and <span class="text-blue-main">Counseling</span> enjoyable.</p>
 
             <!-- Sub-text with more button -->
             <div class="flex flex-col items-end justify-between py-5">
 
-                <p class="font-semibold text-header text-[17px] w-[80%] text-end">Learn, explore and find in a awesome place...</p>
+                <p class="font-semibold text-header text-[17px] w-[80%] text-end">Empower Yourself, Achieve Excellence...</p>
 
-                <button class="font-semibold text-sm text-blue-main p-2 hover:scale-95 transition duration-200">
+                <a href="#about" class="cursor-pointer font-semibold text-sm text-blue-main p-2 hover:scale-95 transition duration-200">
                     More >
-                </button>
+                </a>
 
             </div>
 
@@ -55,7 +55,7 @@
         </div>
 
         <!-- hero img -->
-        <div class="w-full rounded-md h-[580px] bg-cover bg-center mt-[75px] relative" style="background-image: url({{asset('img/hehe.png')}})">
+        <div class="w-full rounded-md h-[580px] bg-cover bg-center mt-[75px] relative" style="background-image: url({{asset('img/hero.png')}})">
             <svg class="absolute -left-20 -top-16 -z-10" width="100" height="112" viewBox="0 0 106 118" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M58.5118 70.4324C60.2229 70.6994 61.9827 70.7688 63.7925 70.6164C70.1432 70.0829 75.24 63.7485 77.426 56.4554C79.6115 49.1652 78.8395 41.0658 74.0554 37.1808C71.3203 34.9588 68.7526 34.2796 66.4352 34.603C64.1302 34.9254 62.0367 36.265 60.2433 38.2615C55.2468 43.8286 52.5845 54.6145 53.3818 59.8774C53.7519 62.3117 54.287 64.7195 54.9646 67.091C48.2996 64.6666 42.5781 58.8867 37.7671 51.6537C27.3106 35.934 21.202 13.2619 19.5891 1.20656C19.5024 0.558861 18.9072 0.106221 18.2595 0.192852C17.6118 0.279483 17.1562 0.87427 17.2428 1.52197C18.8878 13.816 25.1328 36.9323 35.7968 52.9629C41.3047 61.2443 48.0063 67.618 55.8142 69.8401C61.6893 87.4422 75.0748 103.354 86.3093 116.923C86.7233 117.426 87.4716 117.496 87.9756 117.079C88.4767 116.662 88.549 115.917 88.132 115.413C77.3576 102.398 64.4872 87.2308 58.5118 70.4324ZM57.66 67.8739C59.564 68.2887 61.5446 68.4318 63.5973 68.2572C69.0937 67.7964 73.269 62.0896 75.1611 55.7761C76.3194 51.906 76.6108 47.7732 75.7287 44.3432C75.1751 42.1866 74.1581 40.3145 72.5614 39.0191C70.4675 37.3181 68.5347 36.6985 66.7629 36.9481C64.9794 37.1958 63.3933 38.2949 62.0063 39.8427C57.4513 44.9156 54.9965 54.7311 55.7227 59.5216C56.1504 62.3473 56.8095 65.1307 57.66 67.8739Z" fill="#C7C7C7"/>
             </svg>                
@@ -68,7 +68,7 @@
             <div class="flex items-center gap-4">
                 <p class="font-bold text-header text-base">Follow us</p>
                 <ul class="flex items-center gap-2">
-                    <a href="" class="hover:scale-95 transition duration-300">
+                    <a href="https://www.instagram.com/starbhak.official/" target="_blank" class="hover:scale-95 transition duration-300">
                         <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M27 15.3H18C16.5088 15.3 15.3 16.5088 15.3 18V27C15.3 28.4912 16.5088 29.7 18 29.7H27C28.4912 29.7 29.7 28.4912 29.7 27V18C29.7 16.5088 28.4912 15.3 27 15.3ZM18 13.5C15.5147 13.5 13.5 15.5147 13.5 18V27C13.5 29.4853 15.5147 31.5 18 31.5H27C29.4853 31.5 31.5 29.4853 31.5 27V18C31.5 15.5147 29.4853 13.5 27 13.5H18Z" fill="#37373E"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M19.8 22.5C19.8 23.9912 21.0088 25.2 22.5 25.2C23.9912 25.2 25.2 23.9912 25.2 22.5C25.2 21.0088 23.9912 19.8 22.5 19.8C21.0088 19.8 19.8 21.0088 19.8 22.5ZM22.5 18C20.0147 18 18 20.0147 18 22.5C18 24.9853 20.0147 27 22.5 27C24.9853 27 27 24.9853 27 22.5C27 20.0147 24.9853 18 22.5 18Z" fill="#37373E"/>
@@ -76,13 +76,13 @@
                             <circle cx="22.5" cy="22.5" r="22" stroke="#676767" stroke-opacity="0.5"/>
                         </svg>                            
                     </a>
-                    <a href="" class="hover:scale-95 transition duration-300">
+                    <a href="" target="_blank" class="hover:scale-95 transition duration-300">
                         <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M22.5 13C17.2554 13 13 17.2554 13 22.5C13 27.7446 17.2554 32 22.5 32C27.7344 32 32 27.7448 32 22.5C32 17.2552 27.7344 13 22.5 13ZM23.7015 19.1552C22.6449 17.2411 21.5189 15.6302 21.0379 14.9625C21.5083 14.8747 21.9973 14.8305 22.5 14.8305C24.3741 14.8305 26.0952 15.5053 27.4304 16.6221C27.0612 17.0748 25.9233 18.2802 23.7015 19.1552ZM21.7167 19.7684C18.6588 20.5444 15.9475 20.6375 15.0406 20.6485C15.5864 18.4567 17.0822 16.6317 19.06 15.6359C19.4497 16.1758 20.5984 17.8207 21.7167 19.7684ZM24.5237 20.7399C26.8619 19.7397 28.1493 18.4221 28.6191 17.8741C29.5324 19.075 30.0959 20.5527 30.1713 22.1487C29.3949 22.0094 27.2478 21.6811 25.0473 21.9278L25.0227 21.8661C25 21.8088 24.9757 21.7475 24.9449 21.6757C24.8138 21.3644 24.6699 21.0472 24.5237 20.7399ZM14.8104 22.5096V22.504C15.7578 22.5072 19.1107 22.4327 22.593 21.4195C22.7474 21.723 22.8932 22.0312 23.0339 22.3415C23.0145 22.3471 22.9952 22.3527 22.9763 22.3584L22.9717 22.3599C19.3351 23.5333 17.19 26.4739 16.5797 27.4089C15.4792 26.0819 14.8104 24.3693 14.8104 22.5096ZM27.0767 28.6649C26.9174 27.8248 26.5036 25.9093 25.6892 23.6139C27.6918 23.3573 29.4445 23.7629 30.0382 23.9295C29.6855 25.8586 28.5979 27.5358 27.0767 28.6649ZM17.9409 28.687C18.3303 27.9879 19.9591 25.4677 23.7726 24.0829C24.7411 26.6417 25.182 28.8028 25.3355 29.6456C24.4556 30 23.4999 30.1896 22.5 30.1896C20.7931 30.1896 19.2131 29.631 17.9409 28.687Z" fill="#37373E"/>
                             <circle cx="22.5" cy="22.5" r="22" stroke="#676767" stroke-opacity="0.5"/>
                         </svg>                            
                     </a>
-                    <a href="" class="hover:scale-95 transition duration-300">
+                    <a href="" target="_blank" class="hover:scale-95 transition duration-300">
                         <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M33.0055 18.3899C33.064 18.3412 33.1079 18.2773 33.1322 18.2053C33.1565 18.1332 33.1604 18.0558 33.1434 17.9816C33.1263 17.9075 33.089 17.8396 33.0357 17.7853C32.9823 17.7311 32.9149 17.6928 32.8411 17.6746L32.1916 17.5102C32.1325 17.4954 32.0775 17.4677 32.0304 17.429C31.9834 17.3904 31.9455 17.3418 31.9196 17.2867C31.8936 17.2316 31.8802 17.1715 31.8803 17.1106C31.8805 17.0497 31.8941 16.9896 31.9203 16.9347L32.282 16.203C32.3162 16.1321 32.3293 16.0528 32.3198 15.9747C32.3102 15.8966 32.2785 15.8228 32.2282 15.7622C32.178 15.7016 32.1115 15.6567 32.0365 15.6328C31.9615 15.6089 31.8812 15.6071 31.8052 15.6275L30.1609 16.0879C30.0996 16.1057 30.035 16.1091 29.9722 16.0977C29.9095 16.0863 29.8502 16.0604 29.7991 16.0221C29.0876 15.4884 28.2221 15.2 27.3327 15.2C26.2425 15.2 25.1969 15.633 24.426 16.404C23.6551 17.1749 23.222 18.2204 23.222 19.3107V19.6066C23.2223 19.6571 23.2041 19.706 23.1708 19.7439C23.1374 19.7818 23.0912 19.8061 23.0411 19.8122C20.7309 20.0835 18.5193 18.9078 16.1351 16.1619C16.0833 16.1047 16.0168 16.063 15.9428 16.0412C15.8688 16.0195 15.7903 16.0186 15.7158 16.0385C15.6487 16.0694 15.5912 16.1177 15.5492 16.1785C15.5073 16.2392 15.4824 16.3102 15.4774 16.3838C15.1481 17.7365 15.2812 19.1606 15.8556 20.4288C15.8726 20.4624 15.88 20.5001 15.877 20.5377C15.874 20.5752 15.8608 20.6113 15.8387 20.6418C15.8167 20.6724 15.7866 20.6963 15.7519 20.7109C15.7172 20.7255 15.6791 20.7303 15.6418 20.7248L14.721 20.5439C14.6556 20.5334 14.5887 20.5388 14.5258 20.5598C14.463 20.5807 14.4061 20.6165 14.3601 20.6641C14.3141 20.7118 14.2803 20.7698 14.2615 20.8333C14.2428 20.8969 14.2396 20.964 14.2524 21.029C14.3234 21.6599 14.5353 22.2668 14.8726 22.8048C15.2099 23.3427 15.6639 23.7979 16.2009 24.1367C16.2356 24.1535 16.2649 24.1798 16.2854 24.2125C16.3059 24.2452 16.3168 24.283 16.3168 24.3216C16.3168 24.3603 16.3059 24.3981 16.2854 24.4308C16.2649 24.4635 16.2356 24.4898 16.2009 24.5066L15.7651 24.6793C15.7122 24.7005 15.6643 24.7325 15.6244 24.7732C15.5845 24.8139 15.5535 24.8625 15.5334 24.9159C15.5133 24.9692 15.5045 25.0262 15.5076 25.0831C15.5107 25.14 15.5256 25.1957 15.5514 25.2466C15.7923 25.7738 16.1576 26.2348 16.6158 26.5899C17.074 26.945 17.6115 27.1837 18.1822 27.2855C18.2219 27.2999 18.2562 27.3261 18.2804 27.3607C18.3047 27.3953 18.3176 27.4365 18.3176 27.4787C18.3176 27.5209 18.3047 27.5621 18.2804 27.5966C18.2562 27.6312 18.2219 27.6575 18.1822 27.6719C17.0644 28.1342 15.8648 28.3663 14.6552 28.3543C14.5462 28.3325 14.433 28.3549 14.3405 28.4165C14.248 28.4782 14.1838 28.5741 14.162 28.6831C14.1401 28.7921 14.1625 28.9054 14.2242 28.9979C14.2859 29.0904 14.3818 29.1546 14.4908 29.1764C16.5853 30.1698 18.8656 30.7104 21.1831 30.7631C23.2215 30.7942 25.2237 30.2222 26.9381 29.1189C28.3482 28.1775 29.5036 26.9019 30.3012 25.4058C31.0987 23.9096 31.5137 22.2394 31.5092 20.5439V19.8286C31.5097 19.7689 31.5232 19.7101 31.5488 19.6561C31.5743 19.6022 31.6113 19.5544 31.6572 19.5162L33.0055 18.3899Z" fill="#37373E"/>
                             <circle cx="22.5" cy="22.5" r="22" stroke="#676767" stroke-opacity="0.5"/>
@@ -113,14 +113,14 @@
 
 
     <!-- About start -->
-    <section class="w-full px-20 flex justify-between items-center font-Mplus1cus py-20 pb-28">
+    <section class="w-full px-20 flex justify-between items-center font-Mplus1cus py-20 pb-28" id="about">
 
         <div class="flex flex-col gap-7 w-[40%] py-4 h-[680px] relative">
             <p class="font-bold text-sm text-subheader/50 ml-4">About Us</p>
 
             <p class="font-extrabold text-nav-items text-6xl leading-tight">Our Quality Ask Be Different</p>
 
-            <p class="font-medium text-sm text-nav-items/50 mt-6 w-[70%] leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p class="font-medium text-sm text-nav-items/50 mt-6 w-[70%] leading-normal">Guidance and Counseling is a service provided in various educational institutions, such as schools, colleges, or learning centers. The main goal of counseling services is to assist individuals in overcoming personal, social, academic and career problems. This counseling service is designed to help individuals reach their maximum potential.</p>
 
             <button class="px-7 py-3 bg-blue-main text-xs rounded-md mt-9 text-white font-Roboto font-bold tracking-wide w-fit hover:scale-95 transition duration-300">Learn More</button>
 
@@ -151,7 +151,7 @@
             </svg>                
         </div>
 
-        <div class="w-[45%] h-[680px] bg-cover bg-center rounded-lg relative" style="background-image: url({{asset('img/chop.png')}})">
+        <div class="w-[45%] h-[680px] bg-cover bg-center rounded-lg relative" style="background-image: url({{asset('img/about.jpg')}})">
 
             <svg class="absolute -right-9 -top-8" width="34" height="40" viewBox="0 0 34 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.11704 28.2866C7.61503 28.2866 8.86384 27.6142 9.29909 27.3679C15.4143 23.9084 21.4744 20.496 27.7143 17.2632" stroke="#C7C7C7" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>

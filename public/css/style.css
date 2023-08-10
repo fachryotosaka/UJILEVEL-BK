@@ -6,6 +6,14 @@
     padding: 0;
 }
 
+html{
+scroll-behavior: smooth;
+}
+
+*:hover{
+    text-decoration: none;
+}
+
 .font-Mplus1cus{
     font-family: 'M PLUS 1', sans-serif;
 }

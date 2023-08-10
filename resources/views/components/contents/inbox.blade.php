@@ -19,8 +19,8 @@
             <p class="font-semibold text-footer opacity-50 text-[10px]">Masalah Percintaan</p>
         </div>
         
-        <a href="/crequest" class="ml-auto">
-            <button class="ml-auto font-semibold text-[10px] text-white bg-blue-main py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
+        <a href="/request" class="ml-auto">
+            <button class="ml-auto font-semibold text-[10px] text-white bg-gradient-to-br from-blue-main-100 to-blue-main-200 to-[120%] py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
                 View
             </button>
         </a>
@@ -37,8 +37,8 @@
             <p class="font-semibold text-footer opacity-50 text-[10px]">Masalah Percintaan</p>
         </div>
         
-        <a href="/crequest" class="ml-auto">
-            <button class="ml-auto font-semibold text-[10px] text-white bg-blue-main py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
+        <a href="/request" class="ml-auto">
+            <button class="ml-auto font-semibold text-[10px] text-white bg-gradient-to-br from-blue-main-100 to-blue-main-200 to-[120%] py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
                 View
             </button>
         </a>
@@ -55,8 +55,8 @@
             <p class="font-semibold text-footer opacity-50 text-[10px]">Masalah Percintaan</p>
         </div>
         
-        <a href="/crequest" class="ml-auto">
-            <button class="ml-auto font-semibold text-[10px] text-white bg-blue-main py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
+        <a href="/request" class="ml-auto">
+            <button class="ml-auto font-semibold text-[10px] text-white bg-gradient-to-br from-blue-main-100 to-blue-main-200 to-[120%] py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
                 View
             </button>
         </a>
@@ -73,8 +73,8 @@
             <p class="font-semibold text-footer opacity-50 text-[10px]">Masalah Percintaan</p>
         </div>
         
-        <a href="/crequest" class="ml-auto">
-            <button class="ml-auto font-semibold text-[10px] text-white bg-blue-main py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
+        <a href="/request" class="ml-auto">
+            <button class="ml-auto font-semibold text-[10px] text-white bg-gradient-to-br from-blue-main-100 to-blue-main-200 to-[120%] py-2 px-6 rounded-md hover:scale-95 transition duration-200 tracking-wide">
                 View
             </button>
         </a>
