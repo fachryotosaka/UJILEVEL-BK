@@ -24,28 +24,30 @@ class ConsultationController extends Controller
             'place' => 'required',
         ]);
 
+        if (Auth::user()->role === 'student' && $request->input('service_id') == 3) {
+            $validator->sometimes('career_type', 'required', function ($request) {
+                return true;
+            });
+        }
+
         //check if validation fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        if(Auth::user()->role === 'student' && $request->input('students_id') == null){
+        if (Auth::user()->role === 'student' && $request->input('students_id') == null) {
             $student = User::findOrFail(Auth::user()->id);
             $teacher = User::findOrFail($request->input('teacher_id'));
-        } 
-        elseif(Auth::user()->role === 'student' && $request->input('students_id') != null) {
+        } elseif (Auth::user()->role === 'student' && $request->input('students_id') != null) {
             $students = User::findOrFail($request->input('students_id'));
             $teacher = User::findOrFail($request->input('teacher_id'));
-        } 
-        elseif(Auth::user()->role === 'teacher' && $request->input('student_id') != null) {
+        } elseif (Auth::user()->role === 'teacher' && $request->input('student_id') != null) {
             $student = User::findOrFail($request->input('student_id'));
             $teacher = User::findOrFail(Auth::user()->id);
-        } 
-        elseif(Auth::user()->role === 'teacher' && $request->input('students_id') != null) {
+        } elseif (Auth::user()->role === 'teacher' && $request->input('students_id') != null) {
             $students = User::findOrFail($request->input('students_id'));
             $teacher = User::findOrFail(Auth::user()->id);
-        } 
-        else {
+        } else {
             $teacher = User::findOrFail(Auth::user()->id);
         }
 
@@ -54,21 +56,23 @@ class ConsultationController extends Controller
             // Check if the student already has a consultation
             foreach ($students as $student) {
                 if ($student->consultations()
-                            ->where('student_id', $student->id)
-                            ->whereIn('status',  ['waiting', 'approve'])
-                            ->exists()) {
+                    ->where('student_id', $student->id)
+                    ->whereIn('status',  ['waiting', 'approve'])
+                    ->exists()
+                ) {
                     return response()->json([
                         'status' => 'Already make request',
                         'message' => 'Lu jangan spam ye',
                     ]);
                 }
             }
-        } elseif($request->input('student_id') != null) {
+        } elseif ($request->input('student_id') != null) {
             // Check if the student already has a consultation
             if ($student->consultations()
-                        ->where('student_id', $student->id)
-                        ->whereIn('status',  ['waiting', 'approve'])
-                        ->exists()) {
+                ->where('student_id', $student->id)
+                ->whereIn('status',  ['waiting', 'approve'])
+                ->exists()
+            ) {
                 return response()->json([
                     'status' => 'Already make request',
                     'message' => 'Lu jangan spam ye',
@@ -84,6 +88,10 @@ class ConsultationController extends Controller
         $consultation->time = $request->input('time');
         $consultation->date = $request->input('date');
         $consultation->place = $request->input('place');
+
+        if ($request->input('service_id') == 3) {
+            $consultation->career_type = $request->input('career_type');
+        }
         $consultation->status = 'waiting';
         $consultation->save();
 
@@ -111,25 +119,25 @@ class ConsultationController extends Controller
         if ($user->role === 'student') {
             // Retrieve the consultations associated with the student
             $classroomId = $user->classroom_id;
-        
+
             // Get the teacher
             $teacher = User::where('role', 'teacher')
-                            ->where('classroom_id', $classroomId)
-                            ->first();
-        
+                ->where('classroom_id', $classroomId)
+                ->first();
+
             $teacherCounseling = $teacher->teacherConsultations;
-        
+
             $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
                 return $consultation->pivot->student_id === null;
             });
-        
+
             $studentId = $user->id;
             $studentConsultations = Consultation::whereHas('users', function ($query) use ($studentId) {
                 $query->whereRaw("FIND_IN_SET($studentId, student_id)");
             })->get();
-        
+
             $consultations = $consultationsWithNullStudent->concat($studentConsultations);
-        
+
             // Assign the teacher and service names to the consultations
             $consultations = $consultations->map(function ($consultation) use ($teacher) {
                 $consultationService = $consultation->service_id;
@@ -138,99 +146,94 @@ class ConsultationController extends Controller
                 $consultation->service_name = $service->name;
                 return $consultation;
             });
-
         } elseif ($user->role === 'teacher') {
             // Retrieve the consultations associated with the teacher
             $students = User::where('role', 'student')->get();
             $consultations = collect();
             $teacherCounseling = $user->teacherConsultations;
-            
+
             foreach ($students as $student) {
                 $consultationsForStudent = $student->consultations()
                     ->where('teacher_id', $user->id)
                     ->withPivot('student_id')
                     ->get();
-            
+
                 $consultationsForStudent = $consultationsForStudent->map(function ($consultation) {
                     $consultationService = $consultation->service_id;
                     $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
                     return $consultation;
                 });
-            
+
                 $consultations = $consultations->concat($consultationsForStudent);
             }
 
-            if($teacherCounseling->isNotEmpty()){
+            if ($teacherCounseling->isNotEmpty()) {
                 foreach ($teacherCounseling as $consultation) {
                     $consultationService = $consultation->service_id;
-    
+
                     // Get the teacher and service information
                     $service = ConsultationService::find($consultationService);
-    
+
                     $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
                         return $consultation->pivot->student_id === null;
                     });
-    
+
                     $consultation->service_name = $service->name;
-    
                 }
-    
+
                 $consultations = $consultations->concat($consultationsWithNullStudent);
             }
-
-        } elseif($user->role === 'classroom_teacher') {
+        } elseif ($user->role === 'classroom_teacher') {
             // Retrieve the consultations associated with the teacher
             $students = User::where('role', 'student')->get();
             $classroomId = $user->classroom_id;
             $consultations = collect();
             // Get the teacher and service information
             $teacher = User::where('role', 'teacher')
-                            ->where('classroom_id', $classroomId)
-                            ->first();
+                ->where('classroom_id', $classroomId)
+                ->first();
 
             $teacherCounseling = $teacher->teacherConsultations;
-            
+
             foreach ($students as $student) {
                 $consultationsForStudent = $student->consultations()
                     ->where('teacher_id', $teacher->id)
                     ->withPivot('student_id')
                     ->get();
-            
+
                 $consultationsForStudent = $consultationsForStudent->map(function ($consultation) {
                     $consultationService = $consultation->service_id;
                     $consultation->service_name = ConsultationService::where('id', $consultationService)->pluck('name')->first();
                     return $consultation;
                 });
-            
+
                 $consultations = $consultations->concat($consultationsForStudent);
             }
 
-            if($teacherCounseling->isNotEmpty()){
+            if ($teacherCounseling->isNotEmpty()) {
                 foreach ($teacherCounseling as $consultation) {
                     $consultationService = $consultation->service_id;
-    
+
                     // Get the teacher and service information
                     $service = ConsultationService::find($consultationService);
-    
+
                     $consultationsWithNullStudent = $teacherCounseling->filter(function ($consultation) {
                         return $consultation->pivot->student_id === null;
                     });
-    
+
                     $consultation->service_name = $service->name;
-    
                 }
-    
+
                 $consultations = $consultations->concat($consultationsWithNullStudent);
             }
-
         }
-        
+
         $groupedConsultations = $consultations->groupBy('id')->map(function ($group) {
             $studentIds = $group->pluck('pivot.student_id')->first();
             $numbers = explode(",", $studentIds);
             $numbers = array_map('intval', $numbers);
             $studentsData = User::select('name', 'profile_photo_path')->whereIn('id', $numbers)->get();
-            
+
             return $studentsData;
         });
 
@@ -239,7 +242,7 @@ class ConsultationController extends Controller
             $numbers = explode(",", $studentIds);
             $numbers = array_map('intval', $numbers);
             $studentsData = User::select('name', 'profile_photo_path')->whereIn('id', $numbers)->first();
-            
+
             return $studentsData;
         });
 
@@ -249,16 +252,16 @@ class ConsultationController extends Controller
         foreach ($statusConsultations as $status => $consultations) {
             $counts[$status] = $consultations->count();
         }
-        
+
         $consultations = $consultations->unique('id');
 
-        if($request->wantsJson()) {
+        if ($request->wantsJson()) {
             return response()->json([
                 'consultations' => $consultations,
             ], 200);
         }
 
-        return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations','statusConsultations', 'firstImageStudent', 'counts'));
+        return view('dashboard.shared.Archive Table.archiveT', compact('consultations', 'groupedConsultations', 'statusConsultations', 'firstImageStudent', 'counts'));
     }
 
     public function requestForm(Request $request, $id)
@@ -269,7 +272,7 @@ class ConsultationController extends Controller
         $numbers = explode(",", $studentIds);
         $numbers = array_map('intval', $numbers);
         $students = User::whereIn('id', $numbers)->get();
-        if($students->isNotEmpty()){
+        if ($students->isNotEmpty()) {
             $classroom_name = Classroom::where('id', $students[0]->classroom_id)->pluck('name');
         } else {
             $classroom_name = Classroom::where('id', Auth::user()->classroom_id)->pluck('name');

@@ -1,59 +1,3 @@
-{{-- <!-- Modal -->
-<div class="modal fade" id="modal-request-schedule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Request Schedule</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group d-flex">
-                    <img style="height: 100px" src="{{ Auth::user()->profile_photo_url }}">
-                    <div id="detail-student">
-                        <p>Name : {{ Auth::user()->name }}</p>
-                        <p>Class : {{ Auth::user()->classroom->name }}</p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="title" class="control-label">Title</label>
-                    <input type="text" class="form-control" id="title">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-title"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="description" class="control-label">Description</label>
-                    <textarea id="description" class="form-control" rows="5"></textarea>
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-description"></div>
-                </div>
-
-                <div class="form-group" >
-                    <label for="time" class="control-label">Time</label>
-                    <input type="time" class="form-control" id="time">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-time"></div>
-                </div>
-
-                <div class="form-group" >
-                    <label for="date" class="control-label">Date</label>
-                    <input type="date" class="form-control" id="date">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-date"></div>
-                </div>
-                
-                <div class="form-group" >
-                    <label for="place" class="control-label">Place</label>
-                    <input type="place" class="form-control" id="place">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-place"></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">TUTUP</button>
-                <button type="button" class="btn btn-primary" id="confirm">Kirim</button>
-            </div>
-        </div>
-    </div>
-</div> --}}
 <div id="modal-request-schedule" tabindex="-1" aria-hidden="true" class="modal z-10 hidden box-border fixed inset-0 p-20 px-32 py-24 pb-10 flex items-center justify-center overflow-hidden overscroll-contain bg-header/30 transition duration-200 pointer-events-auto visible opacity-100 [&>*]:translate-y-0 [&>*]:scale-100">
                     
     <div class="max-h-full min-w-[50%] w-fit h-fit max-w-full ml-[20%] p-11 px-14 bg-white transition relative rounded-3xl font-Mplus1cus overflow-y-auto hide-scroll">
@@ -90,6 +34,18 @@
                 <label class="font-semibold text-footer opacity-50 text-[13px] mr-16" for="students" >Student</label>
                 <select id="students" class="w-[480px] py-3 focus:outline-none focus:border-opacity-90 hover:border-opacity-90 transition duration-200 px-4 border border-footer border-opacity-25 rounded-md font-medium text-xs text-footer"></select>
                 <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-students"></div>
+            </div>
+
+            <div class="counselingForm flex items-center justify-between gap-10" id="career-request-form" style="display: none">
+                <label class="font-semibold text-footer opacity-50 text-[13px] mr-16" for="career-type" >Career Type</label>
+                <select id="career-type" class="w-[480px] py-3 focus:outline-none focus:border-opacity-90 hover:border-opacity-90 transition duration-200 px-4 border border-footer border-opacity-25 rounded-md font-medium text-xs text-footer">
+                    <option selected value="">Select type career after graduating school</option>
+                    <option value="working">I want go to work</option>
+                    <option value="lecture">I want go to lecture</option>
+                    <option value="entrepreneurial">I want to be Entrepreneurial</option>
+                    <option value="married">I want getting married</option>
+                </select>
+                <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-career-type"></div>
             </div>
 
             @if (Auth::user()->role === 'teacher')
