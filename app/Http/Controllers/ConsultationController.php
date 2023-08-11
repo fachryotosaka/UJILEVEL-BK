@@ -257,7 +257,7 @@ class ConsultationController extends Controller
 
         if ($request->wantsJson()) {
             return response()->json([
-                'consultations' => $consultations,
+                'consultations' => $statusConsultations,
             ], 200);
         }
 
